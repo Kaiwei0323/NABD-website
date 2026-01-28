@@ -54,7 +54,8 @@ export const products = [
     id: 'igx-orin',
     name: 'IGX-ORIN',
     imagePath: '/product/igx-orin/image/IGX-Orin-series_600X600.png',
-    specPath: '/product/igx-orin/spec/Inventec Orin IGX 2U.pdf'
+    specPath: '/product/igx-orin/spec/Inventec Orin IGX 2U.pdf',
+    userGuidePath: '/product/igx-orin/userGuide/Inventec-IGX-Orin_Software_Installation-20250812.pdf'
   },
   {
     id: 'm185',

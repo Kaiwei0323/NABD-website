@@ -6,6 +6,7 @@ const cors = require('cors')
 const fs = require('fs')
 const path = require('path')
 const bcrypt = require('bcryptjs')
+const { PDFDocument, rgb, StandardFonts, degrees } = require('pdf-lib')
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -211,6 +212,96 @@ app.put('/api/user/:username/role', (req, res) => {
   } catch (error) {
     console.error('Update role error:', error)
     res.status(500).json({ success: false, message: 'Server error' })
+  }
+})
+
+// Download PDF with watermark endpoint
+app.get('/api/download-pdf', async (req, res) => {
+  try {
+    const { filePath, username } = req.query
+
+    if (!filePath || !username) {
+      return res.status(400).json({ success: false, message: 'File path and username are required' })
+    }
+
+    // Security: Only allow files from public/product folder
+    const normalizedPath = path.normalize(filePath).replace(/\\/g, '/')
+    
+    // Remove leading slash if present
+    const cleanPath = normalizedPath.startsWith('/') ? normalizedPath.substring(1) : normalizedPath
+    
+    if (!cleanPath.startsWith('product/')) {
+      return res.status(403).json({ success: false, message: 'Access denied' })
+    }
+
+    // Resolve the file path relative to public folder
+    const publicPath = path.join(__dirname, '..', 'public', cleanPath)
+    
+    // Check if file exists
+    if (!fs.existsSync(publicPath)) {
+      return res.status(404).json({ success: false, message: 'File not found' })
+    }
+
+    // Read the PDF file
+    const existingPdfBytes = fs.readFileSync(publicPath)
+
+    // Load the PDF
+    const pdfDoc = await PDFDocument.load(existingPdfBytes)
+
+    // Get all pages
+    const pages = pdfDoc.getPages()
+    const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold)
+
+    // Add watermark to each page
+    pages.forEach((page) => {
+      const { width, height } = page.getSize()
+      
+      // Create watermark text
+      const watermarkText = `Downloaded by: ${username}`
+      const textSize = 12
+      const textWidth = font.widthOfTextAtSize(watermarkText, textSize)
+      
+      // Position watermark at bottom center
+      page.drawText(watermarkText, {
+        x: (width - textWidth) / 2,
+        y: 20,
+        size: textSize,
+        font: font,
+        color: rgb(0.7, 0.7, 0.7), // Light gray color
+        opacity: 0.5,
+        rotate: degrees(0)
+      })
+
+      // Add diagonal watermark across the page
+      const diagonalText = `${username}`
+      const diagonalSize = 48
+      const diagonalWidth = font.widthOfTextAtSize(diagonalText, diagonalSize)
+      
+      page.drawText(diagonalText, {
+        x: (width - diagonalWidth) / 2,
+        y: height / 2,
+        size: diagonalSize,
+        font: font,
+        color: rgb(0.9, 0.9, 0.9),
+        opacity: 0.15,
+        rotate: degrees(-45)
+      })
+    })
+
+    // Serialize the PDF
+    const pdfBytes = await pdfDoc.save()
+
+    // Set headers for PDF download
+    const fileName = path.basename(publicPath)
+    res.setHeader('Content-Type', 'application/pdf')
+    res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`)
+    res.setHeader('Content-Length', pdfBytes.length)
+
+    // Send the watermarked PDF
+    res.send(Buffer.from(pdfBytes))
+  } catch (error) {
+    console.error('Watermark error:', error)
+    res.status(500).json({ success: false, message: 'Failed to process PDF' })
   }
 })
 

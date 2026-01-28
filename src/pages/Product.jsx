@@ -11,6 +11,9 @@ const Product = () => {
   
   // Check if user can download (admin or customer only)
   const canDownload = user && (user.role === 'admin' || user.role === 'customer')
+  
+  // Get API URL from environment
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
 
   // Category mapping
   const categories = {
@@ -26,14 +29,45 @@ const Product = () => {
     ? products 
     : products.filter(product => categories[selectedCategory].products.includes(product.id))
 
-  const handleDownload = (filePath, fileName) => {
-    if (filePath) {
+  const handleDownload = async (filePath, fileName) => {
+    if (!filePath || !user) return
+
+    try {
+      // Convert file path to relative path for the API
+      const relativePath = filePath.startsWith('/') ? filePath.substring(1) : filePath
+      
+      // Call watermark endpoint
+      const response = await fetch(
+        `${API_URL}/download-pdf?filePath=${encodeURIComponent(relativePath)}&username=${encodeURIComponent(user.username)}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/pdf',
+          },
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error('Failed to download file')
+      }
+
+      // Get the PDF blob
+      const blob = await response.blob()
+      
+      // Create download link
+      const url = window.URL.createObjectURL(blob)
       const link = document.createElement('a')
-      link.href = filePath
-      link.download = fileName
+      link.href = url
+      link.download = fileName || relativePath.split('/').pop()
       document.body.appendChild(link)
       link.click()
+      
+      // Cleanup
+      window.URL.revokeObjectURL(url)
       document.body.removeChild(link)
+    } catch (error) {
+      console.error('Download error:', error)
+      alert('Failed to download file. Please try again.')
     }
   }
 
