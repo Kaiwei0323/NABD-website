@@ -224,13 +224,16 @@ app.get('/api/download-pdf', async (req, res) => {
       return res.status(400).json({ success: false, message: 'File path and username are required' })
     }
 
-    // Security: Only allow files from public/product folder
+    // Security: Only allow PDFs from public/product or public/case_study
     const normalizedPath = path.normalize(filePath).replace(/\\/g, '/')
     
     // Remove leading slash if present
     const cleanPath = normalizedPath.startsWith('/') ? normalizedPath.substring(1) : normalizedPath
     
-    if (!cleanPath.startsWith('product/')) {
+    const isAllowed =
+      cleanPath.startsWith('product/') || cleanPath.startsWith('case_study/')
+
+    if (!isAllowed) {
       return res.status(403).json({ success: false, message: 'Access denied' })
     }
 

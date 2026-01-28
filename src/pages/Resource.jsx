@@ -1,6 +1,10 @@
+import { useAuth } from '../context/AuthContext'
 import './Resource.css'
 
 const Resource = () => {
+  const { user } = useAuth()
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+
   const caseStudies = [
     {
       id: 'smart-factory',
@@ -25,13 +29,36 @@ const Resource = () => {
     }
   ]
 
-  const handleDownload = (filePath, fileName) => {
-    const link = document.createElement('a')
-    link.href = filePath
-    link.download = fileName
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
+  const handleDownload = async (filePath, fileName) => {
+    if (!filePath || !user) {
+      alert('Please login to download resources.')
+      return
+    }
+
+    try {
+      const relativePath = filePath.startsWith('/') ? filePath.substring(1) : filePath
+
+      const response = await fetch(
+        `${API_URL}/download-pdf?filePath=${encodeURIComponent(relativePath)}&username=${encodeURIComponent(user.username)}`,
+        { method: 'GET' }
+      )
+
+      if (!response.ok) throw new Error('Failed to download file')
+
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = fileName || relativePath.split('/').pop()
+      document.body.appendChild(link)
+      link.click()
+
+      window.URL.revokeObjectURL(url)
+      document.body.removeChild(link)
+    } catch (error) {
+      console.error('Download error:', error)
+      alert('Failed to download file. Please try again.')
+    }
   }
 
   return (

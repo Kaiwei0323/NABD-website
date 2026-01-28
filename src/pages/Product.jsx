@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { products } from '../utils/productData'
 import './Product.css'
@@ -8,9 +8,11 @@ const Product = () => {
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [selectedCategory, setSelectedCategory] = useState('all')
   const { user } = useAuth()
+  const navigate = useNavigate()
   
   // Check if user can download (admin or customer only)
   const canDownload = user && (user.role === 'admin' || user.role === 'customer')
+  const canViewDetails = canDownload
   
   // Get API URL from environment
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
@@ -94,9 +96,19 @@ const Product = () => {
         {filteredProducts.map((product) => (
           <div 
             key={product.id} 
-            className="product-card"
+            className={`product-card ${canViewDetails ? '' : 'detail-disabled'}`}
             onMouseEnter={() => setSelectedProduct(product.id)}
             onMouseLeave={() => setSelectedProduct(null)}
+            onClick={canViewDetails ? () => navigate(`/product/${product.id}`) : undefined}
+            role={canViewDetails ? 'button' : undefined}
+            tabIndex={canViewDetails ? 0 : undefined}
+            onKeyDown={
+              canViewDetails
+                ? (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') navigate(`/product/${product.id}`)
+                  }
+                : undefined
+            }
           >
             <div className="product-image-container">
               <img 
@@ -121,6 +133,7 @@ const Product = () => {
                         className="download-link"
                         onClick={(e) => {
                           e.preventDefault()
+                          e.stopPropagation()
                           const fileName = product.specPath.split('/').pop()
                           handleDownload(product.specPath, fileName)
                         }}
@@ -147,6 +160,7 @@ const Product = () => {
                         className="download-link user-guide-link"
                         onClick={(e) => {
                           e.preventDefault()
+                          e.stopPropagation()
                           const fileName = product.userGuidePath.split('/').pop()
                           handleDownload(product.userGuidePath, fileName)
                         }}
