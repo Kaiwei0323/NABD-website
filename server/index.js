@@ -1,3 +1,6 @@
+// Load environment variables from .env file if it exists
+require('dotenv').config()
+
 const express = require('express')
 const cors = require('cors')
 const fs = require('fs')
@@ -5,11 +8,22 @@ const path = require('path')
 const bcrypt = require('bcryptjs')
 
 const app = express()
-const PORT = 3001
+const PORT = process.env.PORT || 3001
+const HOST = process.env.HOST || '0.0.0.0'
 const DB_PATH = path.join(__dirname, 'database', 'users.json')
 
 // Middleware
-app.use(cors())
+// CORS configuration - allow requests from static IP and localhost for development
+const corsOptions = {
+  origin: [
+    'http://99.64.152.69:3000',
+    'http://99.64.152.69',
+    'http://localhost:3000',
+    'http://localhost'
+  ],
+  credentials: true
+}
+app.use(cors(corsOptions))
 app.use(express.json())
 
 // Ensure database directory exists
@@ -205,7 +219,8 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Server is running' })
 })
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`)
+app.listen(PORT, HOST, () => {
+  console.log(`Server is running on http://${HOST}:${PORT}`)
+  console.log(`Accessible from: http://99.64.152.69:${PORT}`)
   console.log(`Database location: ${DB_PATH}`)
 })
