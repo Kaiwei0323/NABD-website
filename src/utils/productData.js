@@ -575,6 +575,7 @@ export const products = [
     name: 'EDGE-PRO-2U',
     imagePath: '/product/edge-pro-2u/image/server-2U_1000X1000.png',
     specPath: '/product/edge-pro-2u/spec/edge_pro_2u_spec.pdf',
+    userGuidePath: '/product/edge-pro-2u/userGuilde/EdgePro Quick start guide.pdf',
     specInfo: {
       model: 'Edge-Pro 2U',
       form_factor: {
