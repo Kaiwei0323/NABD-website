@@ -3,12 +3,15 @@
   margin: 0 auto;
   padding: 2.5rem 2rem;
   min-height: calc(100vh - 80px);
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .product-detail-container {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  min-width: 0;
 }
 
 .product-detail-top {
@@ -35,6 +38,7 @@
   border-radius: 14px;
   padding: 1.5rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  min-width: 0;
 }
 
 .product-detail-image {
@@ -53,15 +57,25 @@
   object-fit: contain;
 }
 
+.product-detail-meta {
+  min-width: 0;
+}
+
 .product-detail-title {
   margin: 0;
   font-size: 2.2rem;
   color: #1f2937;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
 }
 
 .product-detail-subtitle {
   margin: 0.35rem 0 0;
   color: #6b7280;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .product-detail-actions {
@@ -113,12 +127,16 @@
 
 .product-detail-specs {
   margin-top: 0.5rem;
+  min-width: 0;
 }
 
 .product-detail-section-title {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.5rem;
   font-size: 1.4rem;
   color: #1f2937;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
 }
 
 .spec-card {
@@ -126,6 +144,29 @@
   border-radius: 14px;
   padding: 1rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.spec-card .product-detail-section-title {
+  margin: 0 0 0;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+/* First table: no top border (title has the line); first table is 2nd child (after h2) */
+.spec-card .spec-table-wrap:nth-child(2) .spec-models-grid {
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* When there are two tables (e.g. aioox), remove bottom border of first table so only one line shows */
+.spec-card .spec-table-wrap:nth-child(2):not(:last-child) .spec-models-grid {
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .spec-object {
@@ -141,15 +182,23 @@
   padding: 0.6rem 0.75rem;
   border-radius: 10px;
   background: #f9fafb;
+  min-width: 0;
 }
 
 .spec-key {
   font-weight: 800;
   color: #111827;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  min-width: 0;
 }
 
 .spec-value {
   color: #111827;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;
 }
 
 .spec-null {
@@ -175,6 +224,14 @@
   padding: 0.6rem 0.75rem;
   border-radius: 10px;
   background: #f9fafb;
+  min-width: 0;
+}
+
+.spec-array-value {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;
 }
 
 .spec-array-index {
@@ -197,13 +254,145 @@
   color: #374151;
 }
 
+/* Unified spec table: same spacing as aioox on all product detail pages */
+.spec-table-wrap {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.spec-table-wrap:last-child {
+  margin-bottom: 0;
+}
+
+.spec-models-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+  color: #374151;
+  font-weight: 700;
+}
+
+.spec-models-grid {
+  display: grid;
+  grid-template-columns: 200px repeat(var(--model-count, 1), minmax(180px, 1fr));
+  gap: 0;
+  border: 1px solid #e5e7eb;
+  border-top: none;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f9fafb;
+}
+
+.spec-models-header {
+  font-weight: 700;
+  color: #111827;
+  background: rgba(102, 126, 234, 0.12);
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+.spec-models-cell {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+  color: #374151;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;
+}
+
+.spec-models-cell.spec-models-key {
+  font-weight: 600;
+  color: #111827;
+  background: #f3f4f6;
+}
+
+.spec-models-row {
+  display: contents;
+}
+
+.spec-models-row .spec-models-cell {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.spec-models-row:last-child .spec-models-cell {
+  border-bottom: none;
+}
+
+.spec-row-top {
+  margin-bottom: 0.25rem;
+}
+
 @media (max-width: 900px) {
+  .product-detail-page {
+    padding: 1.5rem 1rem;
+  }
+
   .product-detail-hero {
     grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .product-detail-title {
+    font-size: 1.75rem;
   }
 
   .spec-row {
     grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  .spec-models-grid {
+    overflow-x: auto;
+    min-width: 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .spec-models-grid {
+    grid-template-columns: 160px repeat(var(--model-count, 1), minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .product-detail-page {
+    padding: 1rem 0.75rem;
+  }
+
+  .product-detail-hero {
+    padding: 0.75rem;
+  }
+
+  .product-detail-title {
+    font-size: 1.4rem;
+  }
+
+  .product-detail-image {
+    min-height: 240px;
+  }
+
+  .product-detail-image img {
+    max-height: 240px;
+  }
+
+  .spec-card {
+    padding: 0.75rem;
+  }
+
+  .spec-row {
+    padding: 0.5rem 0.6rem;
+  }
+
+  .spec-models-grid {
+    grid-template-columns: 120px repeat(var(--model-count, 1), minmax(110px, 1fr));
+  }
+
+  .spec-models-cell,
+  .spec-models-header {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.8rem;
   }
 }
 

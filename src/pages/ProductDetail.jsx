@@ -46,6 +46,23 @@ const ProductDetail = () => {
       .replace(/_/g, ' ')
       .replace(/\b\w/g, (c) => c.toUpperCase())
 
+  /** Flatten a spec value to a short string for comparison table cells */
+  const valueToDisplay = (value) => {
+    if (value === null || value === undefined) return '—'
+    if (typeof value === 'string' || typeof value === 'number') return String(value)
+    if (typeof value === 'boolean') return value ? 'Yes' : 'No'
+    if (Array.isArray(value)) {
+      const prim = value.every((v) => v === null || ['string', 'number', 'boolean'].includes(typeof v))
+      if (prim) return value.join(', ')
+      return value.map((v) => (typeof v === 'object' && v !== null ? JSON.stringify(v) : String(v))).join('; ')
+    }
+    if (typeof value === 'object') {
+      const parts = Object.entries(value).map(([k, v]) => `${formatKey(k)}: ${valueToDisplay(v)}`)
+      return parts.join(' · ')
+    }
+    return String(value)
+  }
+
   const renderValue = (value, depth = 0) => {
     if (value === null || value === undefined) return <span className="spec-null">N/A</span>
     if (typeof value === 'string' || typeof value === 'number') return <span>{String(value)}</span>
@@ -180,14 +197,78 @@ const ProductDetail = () => {
         </div>
 
         <div className="product-detail-specs">
-          <h2 className="product-detail-section-title">Specification Details</h2>
           {product.specInfo ? (
-            <div className="spec-card">{renderValue(product.specInfo)}</div>
-          ) : (
-            <div className="spec-empty">
-              No `specInfo` has been added for this product yet (the PDF download may still be
-              available).
+            <div className="spec-card">
+              <h2 className="product-detail-section-title">Specification Details</h2>
+              {Array.isArray(product.specInfo.models) && product.specInfo.models.length > 0 ? (
+                <>
+                  <div className="spec-table-wrap">
+                    <div
+                      className="spec-models-grid spec-models-grid-single"
+                      style={{ '--model-count': 1 }}
+                    >
+                      {Object.entries(product.specInfo)
+                        .filter(([k]) => k !== 'models')
+                        .map(([k, v]) => (
+                          <div key={k} className="spec-models-row">
+                            <div className="spec-models-cell spec-models-key">{formatKey(k)}</div>
+                            <div className="spec-models-cell spec-models-model">{valueToDisplay(v)}</div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                  <div className="spec-table-wrap">
+                    <div
+                      className="spec-models-grid"
+                      style={{ '--model-count': product.specInfo.models.length }}
+                    >
+                      <div className="spec-models-header spec-models-cell spec-models-key">Spec</div>
+                      {product.specInfo.models.map((m) => (
+                        <div key={m.model || JSON.stringify(m)} className="spec-models-header spec-models-cell spec-models-model">
+                          {m.model ? String(m.model).toUpperCase() : '—'}
+                        </div>
+                      ))}
+                      {(() => {
+                        const models = product.specInfo.models
+                        const allKeys = [...new Set(models.flatMap((m) => Object.keys(m).filter((key) => key !== 'model')))]
+                        return allKeys.map((key) => (
+                          <div key={key} className="spec-models-row">
+                            <div className="spec-models-cell spec-models-key">{formatKey(key)}</div>
+                            {models.map((m) => (
+                              <div key={`${m.model}-${key}`} className="spec-models-cell spec-models-model">
+                                {valueToDisplay(m[key])}
+                              </div>
+                            ))}
+                          </div>
+                        ))
+                      })()}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="spec-table-wrap">
+                    <div
+                      className="spec-models-grid spec-models-grid-single"
+                      style={{ '--model-count': 1 }}
+                    >
+                      {Object.entries(product.specInfo).map(([k, v]) => (
+                      <div key={k} className="spec-models-row">
+                        <div className="spec-models-cell spec-models-key">{formatKey(k)}</div>
+                        <div className="spec-models-cell spec-models-model">{valueToDisplay(v)}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
+          ) : (
+            <>
+              <h2 className="product-detail-section-title">Specification Details</h2>
+              <div className="spec-empty">
+                No `specInfo` has been added for this product yet (the PDF download may still be
+                available).
+              </div>
+            </>
           )}
         </div>
       </div>

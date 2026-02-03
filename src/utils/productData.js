@@ -422,7 +422,6 @@ export const products = [
     imagePath: '/product/aioox/image/Edge-aioox_600x600.png',
     specPath: '/product/aioox/spec/AIM Edge aioox.pdf',
     specInfo: {
-      product_family: 'AIM-Edge',
       models: [
         {
           model: 'aioh3',
@@ -457,16 +456,22 @@ export const products = [
           power: {
             input_voltage: '110~220V AC',
             protection: ['Molded Case Circuit Breaker', 'Earth Leakage Circuit Breaker']
+          },
+          poe_switch: {
+            ports: 8,
+            power_rating: ['120W 12V', '120W 48V']
           }
         },
         {
           model: 'aiox1',
           processor: 'NVIDIA Jetson Xavier NX',
           memory: '8GB LPDDR4',
+          expansion_storage: 'mSATA Slot (2.5" SSD 1TB)',
           storage: {
             type: 'PCIE M.2 SSD',
             capacity: '256GB'
           },
+          wireless: 'Yes, via Router',
           ethernet: [
             { port_type: 'GigaBit Ethernet', count: 1 },
             { port_type: 'GigaBit Ethernet 802.3at', count: 3 }
@@ -482,7 +487,19 @@ export const products = [
             ports: 8,
             power_rating: ['120W 12V', '120W 48V']
           },
-          buttons: ['Reset', 'Recovery', 'Power']
+          buttons: ['Reset', 'Recovery', 'Power'],
+          environment: {
+            operation_temperature: '-20 ~ 60°C'
+          },
+          mechanical: {
+            dimensions_mm: '600 x 478 x 188',
+            weight_kg: 19.5
+          },
+          os: ['Linux 4.9', 'Ubuntu 18.04'],
+          power: {
+            input_voltage: '110~220V AC',
+            protection: ['Molded Case Circuit Breaker', 'Earth Leakage Circuit Breaker']
+          }
         },
         {
           model: 'aioox',
@@ -492,6 +509,7 @@ export const products = [
             type: 'External NVMe via x4 PCIe / PCIE M.2 SSD',
             capacity: '256GB'
           },
+          wireless: 'Yes, via Router',
           ethernet: [
             { port_type: 'GigaBit Ethernet', count: 1 },
             { port_type: 'GigaBit Ethernet 802.3at', count: 6 }
@@ -503,11 +521,24 @@ export const products = [
             { type: 'PWM (0-10V)', count: 1 },
             { type: 'GPIO', DO: 2 }
           ],
+          expansion_storage: 'mSATA Slot (2.5" SSD 1TB)',
           poe_switch: {
             ports: 8,
             power_rating: ['120W 12V', '240W 48V']
           },
-          buttons: ['Reset', 'Recovery', 'Power']
+          buttons: ['Reset', 'Recovery', 'Power'],
+          environment: {
+            operation_temperature: '-20 ~ 60°C'
+          },
+          mechanical: {
+            dimensions_mm: '600 x 478 x 188',
+            weight_kg: 19.5
+          },
+          os: ['Linux 4.9', 'Ubuntu 18.04'],
+          power: {
+            input_voltage: '110~220V AC',
+            protection: ['Molded Case Circuit Breaker', 'Earth Leakage Circuit Breaker']
+          }
         }
       ]
     }
@@ -1046,23 +1077,103 @@ export const products = [
     specPath: '/product/qc01/spec/qc01_spec.pdf',
     userGuidePath: '/product/qc01/userGuide/QC01W-UserGuide-v1.0.pdf',
     specInfo: {
-      model: 'QC01',
-      processor: 'QCS6490',
-      platform: 'Qualcomm',
-      tops: 12,
-      ai_accelerator: 'Qualcomm DSP',
-      memory: '8GB LPDDR4x RAM',
-      storage: '128GB UFS Flash (uMCP)',
-      os: 'Qualcomm Linux / Windows 11 IOT / Linux Ubuntu / Android 13',
-      wireless: 'WiFi 802.11 ax',
-      bluetooth: 'Bluetooth 5.2',
-      io: '4 x USB 3.0 Type-A, 1 x USB 3.0 Type-C',
-      button: '1 x Reset, 1 x Recovery, 1 x Power, 1 x Function',
-      ethernet: '2 x RJ45 LAN (10G + 1G)',
-      hdmi: '1 x HDMI (Type-A)',
-      power: 'DC-In 19V adapter',
-      mechanical_dimension: '95(W) x 130(D) x 40(H) mm',
-      di_do: '2DI / 2DO'
+      models: [
+        {
+          model: 'QC01WE (SKU1)',
+          processor: 'QCS6490',
+          platform: 'Qualcomm',
+          tops: 12,
+          ai_accelerator: 'Qualcomm DSP',
+          memory: '8GB LPDDR4x RAM',
+          storage: '128GB UFS Flash (uMCP)',
+          os: 'Qualcomm Linux / Windows 11 IOT / Linux Ubuntu / Android 13',
+          wireless: 'NA',
+          bluetooth: 'Bluetooth 5.2',
+          io: '1 x USB 3.0 Type-A, 1 x USB 3.0 Type-C',
+          button: '1 x Reset, 1 x Recovery, 1 x Power, 1 x Function',
+          ethernet: '1 x RJ45 LAN (1G)',
+          hdmi: '1 x HDMI (Type-A)',
+          power: 'DC-In 19V adapter',
+          mechanical_dimension: '95(W) x 130(D) x 40(H) mm',
+          di_do: '4DI / 4DO'
+        },
+        {
+          model: 'QC01W (SKU2)',
+          processor: 'QCS6490',
+          platform: 'Qualcomm',
+          tops: 12,
+          ai_accelerator: 'Qualcomm DSP',
+          memory: '8GB LPDDR4x RAM',
+          storage: '128GB UFS Flash (uMCP)',
+          os: 'Qualcomm Linux / Windows 11 IOT / Linux Ubuntu / Android 13',
+          wireless: 'NA',
+          bluetooth: 'Bluetooth 5.2',
+          io: '2 x USB 3.0 Type-A, 1 x USB 3.0 Type-C',
+          button: '1 x Reset, 1 x Recovery, 1 x Power, 1 x Function',
+          ethernet: '2 x RJ45 LAN (1G)',
+          hdmi: '1 x HDMI (Type-A)',
+          power: 'DC-In 19V adapter',
+          mechanical_dimension: '95(W) x 130(D) x 40(H) mm',
+          di_do: '4DI / 4DO'
+        },
+        {
+          model: 'QC01W (SKU3)',
+          processor: 'QCS6490',
+          platform: 'Qualcomm',
+          tops: 12,
+          ai_accelerator: 'Qualcomm DSP',
+          memory: '8GB LPDDR4x RAM',
+          storage: '128GB UFS Flash (uMCP)',
+          os: 'Qualcomm Linux / Windows 11 IOT / Linux Ubuntu / Android 13',
+          wireless: 'WiFi 802.11 ax',
+          bluetooth: 'Bluetooth 5.2',
+          io: '2 x USB 3.0 Type-A, 1 x USB 3.0 Type-C',
+          button: '1 x Reset, 1 x Recovery, 1 x Power, 1 x Function',
+          ethernet: '2 x RJ45 LAN (1G)',
+          hdmi: '1 x HDMI (Type-A)',
+          power: 'DC-In 19V adapter',
+          mechanical_dimension: '95(W) x 130(D) x 40(H) mm',
+          di_do: '2DI / 2DO'
+        },
+        {
+          model: 'QC01WP (SKU4)',
+          processor: 'QCS6490',
+          platform: 'Qualcomm',
+          tops: 12,
+          ai_accelerator: 'Qualcomm DSP',
+          memory: '8GB LPDDR4x RAM',
+          storage: '128GB UFS Flash (uMCP)',
+          os: 'Qualcomm Linux / Windows 11 IOT / Linux Ubuntu / Android 13',
+          wireless: 'NA',
+          bluetooth: 'Bluetooth 5.2',
+          io: '4 x USB 3.0 Type-A, 1 x USB 3.0 Type-C',
+          button: '1 x Reset, 1 x Recovery, 1 x Power, 1 x Function',
+          ethernet: '2 x RJ45 LAN (10G + 1G)',
+          hdmi: '1 x HDMI (Type-A)',
+          power: 'DC-In 19V adapter',
+          mechanical_dimension: '95(W) x 130(D) x 40(H) mm',
+          di_do: '4DI / 4DO'
+        },
+        {
+          model: 'QC01WP (SKU5)',
+          processor: 'QCS6490',
+          platform: 'Qualcomm',
+          tops: 12,
+          ai_accelerator: 'Qualcomm DSP',
+          memory: '8GB LPDDR4x RAM',
+          storage: '128GB UFS Flash (uMCP)',
+          os: 'Qualcomm Linux / Windows 11 IOT / Linux Ubuntu / Android 13',
+          wireless: 'WiFi 802.11 ax',
+          bluetooth: 'Bluetooth 5.2',
+          io: '4 x USB 3.0 Type-A, 1 x USB 3.0 Type-C',
+          button: '1 x Reset, 1 x Recovery, 1 x Power, 1 x Function',
+          ethernet: '2 x RJ45 LAN (10G + 1G)',
+          hdmi: '1 x HDMI (Type-A)',
+          power: 'DC-In 19V adapter',
+          mechanical_dimension: '95(W) x 130(D) x 40(H) mm',
+          di_do: '2DI / 2DO'
+        }
+      ]
     }
   },
   {
