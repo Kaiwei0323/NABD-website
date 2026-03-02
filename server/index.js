@@ -53,6 +53,60 @@ const writeUsers = (users) => {
   fs.writeFileSync(DB_PATH, JSON.stringify(users, null, 2))
 }
 
+// NVIDIA developer secret endpoints (admin only, requires password re-check)
+app.post('/api/dev/nvidia/ncox-ncon/jp512/ota/sftp', async (req, res) => {
+  try {
+    const { username, password } = req.body || {}
+
+    if (!username || !password) {
+      return res.status(400).json({ success: false, message: 'Username and password are required' })
+    }
+
+    const users = readUsers()
+    const user = users.find((u) => u.username === username)
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'Invalid credentials' })
+    }
+
+    const isValidPassword = await bcrypt.compare(password, user.passwordHash)
+    if (!isValidPassword) {
+      return res.status(401).json({ success: false, message: 'Invalid credentials' })
+    }
+
+    if (user.role !== 'admin') {
+      return res.status(403).json({ success: false, message: 'Access denied' })
+    }
+
+    const host = process.env.NCOX_NCON_JP512_OTA_SFTP_HOST
+    const port = process.env.NCOX_NCON_JP512_OTA_SFTP_PORT
+    const sftpUser = process.env.NCOX_NCON_JP512_OTA_SFTP_USERNAME
+    const sftpPassword = process.env.NCOX_NCON_JP512_OTA_SFTP_PASSWORD
+    const filePath = process.env.NCOX_NCON_JP512_OTA_PATH
+
+    if (!host || !port || !sftpUser || !sftpPassword || !filePath) {
+      return res.status(500).json({
+        success: false,
+        message:
+          'SFTP credentials are not configured on the server. Set NCOX_NCON_JP512_OTA_SFTP_HOST, NCOX_NCON_JP512_OTA_SFTP_PORT, NCOX_NCON_JP512_OTA_SFTP_USERNAME, NCOX_NCON_JP512_OTA_SFTP_PASSWORD, and NCOX_NCON_JP512_OTA_PATH.'
+      })
+    }
+
+    res.json({
+      success: true,
+      credentials: {
+        host,
+        port,
+        username: sftpUser,
+        password: sftpPassword,
+        path: filePath
+      }
+    })
+  } catch (error) {
+    console.error('Dev NVIDIA SFTP credential error:', error)
+    res.status(500).json({ success: false, message: 'Server error' })
+  }
+})
+
 // Register endpoint
 app.post('/api/register', async (req, res) => {
   try {
