@@ -30,6 +30,19 @@ npm run dev
 
 3. Open your browser and navigate to `http://localhost:3000`
 
+### Running with Docker
+
+From the project root (e.g. `NABD-website`):
+
+```bash
+docker compose up --build
+```
+
+- **Backend (database)**: http://99.64.152.69:3001  
+- **Frontend (website)**: http://99.64.152.69:3000  
+
+Stop with `Ctrl+C`. Run in background with `docker compose up -d --build`.
+
 ### Building for Production
 
 ```bash

@@ -1,0 +1,27 @@
+services:
+  # Backend / database server - http://99.64.152.69:3001
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      # Use host's server/database so existing users.json is used (same as when running server locally)
+      - ./server/database:/app/server/database
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3001
+
+  # Frontend (Vite dev server) - http://99.64.152.69:3000
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - server
