@@ -93,7 +93,8 @@ const Admin = () => {
                       className="admin-role-select"
                       value={u.role}
                       onChange={(e) => handleRoleChange(u.username, e.target.value)}
-                      disabled={updating === u.username}
+                      disabled={updating === u.username || u.username === user?.username}
+                      title={u.username === user?.username ? 'You cannot change your own role' : undefined}
                     >
                       {ROLES.map((r) => (
                         <option key={r} value={r}>
