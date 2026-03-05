@@ -9,6 +9,7 @@ import Resource from './pages/Resource'
 import Contact from './pages/Contact'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Admin from './pages/Admin'
 import Developer from './pages/Developer'
 import QC01WReflashUbuntu2004Minimal from './pages/developer/qc01w/QC01WReflashUbuntu2004Minimal'
 import QC01WReflashUbuntu2404 from './pages/developer/qc01w/QC01WReflashUbuntu2404'
@@ -44,6 +45,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/admin" element={<Admin />} />
             </Routes>
           </main>
           <Footer />

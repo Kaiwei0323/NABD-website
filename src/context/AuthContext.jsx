@@ -1,8 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react'
+import { getApiUrl } from '../utils/api'
 
 const AuthContext = createContext(null)
-// Use environment variable or default to static IP for production
-const API_URL = import.meta.env.VITE_API_URL || 'http://99.64.152.69:3001/api'
+const API_URL = getApiUrl()
 
 export const useAuth = () => {
   const context = useContext(AuthContext)

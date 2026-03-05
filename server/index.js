@@ -14,14 +14,20 @@ const HOST = process.env.HOST || '0.0.0.0'
 const DB_PATH = path.join(__dirname, 'database', 'users.json')
 
 // Middleware
-// CORS configuration - allow requests from static IP and localhost for development
+// CORS configuration - allow frontend origins (static IP, localhost, inventecna domain)
 const corsOptions = {
-  origin: [
-    'http://99.64.152.69:3000',
-    'http://99.64.152.69',
-    'http://localhost:3000',
-    'http://localhost'
-  ],
+  origin: (origin, callback) => {
+    const allowed = [
+      'http://99.64.152.69:3000',
+      'http://99.64.152.69',
+      'http://localhost:3000',
+      'http://localhost'
+    ]
+    const allowedHost = !origin || allowed.includes(origin) ||
+      /^https?:\/\/(www\.)?inventecna(\.com)?(:\d+)?$/i.test(origin) ||
+      (origin && origin.includes('inventecna'))
+    callback(null, allowedHost)
+  },
   credentials: true
 }
 app.use(cors(corsOptions))
@@ -265,6 +271,23 @@ app.put('/api/user/:username/role', (req, res) => {
     res.json({ success: true, message: 'Role updated successfully' })
   } catch (error) {
     console.error('Update role error:', error)
+    res.status(500).json({ success: false, message: 'Server error' })
+  }
+})
+
+// Delete user endpoint (admin only)
+app.delete('/api/user/:username', (req, res) => {
+  try {
+    const { username } = req.params
+    const users = readUsers()
+    const newUsers = users.filter(u => u.username !== username)
+    if (newUsers.length === users.length) {
+      return res.status(404).json({ success: false, message: 'User not found' })
+    }
+    writeUsers(newUsers)
+    res.json({ success: true, message: 'User deleted successfully' })
+  } catch (error) {
+    console.error('Delete user error:', error)
     res.status(500).json({ success: false, message: 'Server error' })
   }
 })

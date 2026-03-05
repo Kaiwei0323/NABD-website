@@ -31,3 +31,7 @@ yarn-error.log*
 # Database
 server/database/users.json
 server/node_modules
+
+# SSL certificates and private keys (never commit to git)
+ssl/
+*.pem

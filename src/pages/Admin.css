@@ -1,0 +1,112 @@
+.admin-page {
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem 1rem;
+}
+
+.admin-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.admin-container h1 {
+  font-size: 1.75rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.admin-subtitle {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-error {
+  background: #fee;
+  color: #c33;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid #fcc;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-table th {
+  font-weight: 600;
+  color: #555;
+  background: #f8f9fa;
+}
+
+.admin-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.admin-role-select {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  min-width: 100px;
+  cursor: pointer;
+}
+
+.admin-role-select:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.admin-saving {
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.admin-empty {
+  color: #888;
+  text-align: center;
+  padding: 2rem;
+}
+
+.admin-delete-btn {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  color: #c33;
+  background: #fff;
+  border: 1px solid #c33;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.admin-delete-btn:hover:not(:disabled) {
+  background: #fee;
+}
+
+.admin-delete-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.admin-self {
+  color: #888;
+  font-size: 0.9rem;
+}

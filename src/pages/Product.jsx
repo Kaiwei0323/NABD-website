@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { products } from '../utils/productData'
+import { getApiUrl } from '../utils/api'
 import './Product.css'
 
 const Product = () => {
@@ -14,8 +15,7 @@ const Product = () => {
   const canDownload = user && (user.role === 'admin' || user.role === 'customer')
   const canViewDetails = canDownload
   
-  // Get API URL from environment
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+  const API_URL = getApiUrl()
 
   // Category mapping
   const categories = {

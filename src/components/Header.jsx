@@ -21,6 +21,9 @@ const Header = () => {
           <Link to="/developer" className="nav-link">Developer</Link>
           <Link to="/resource" className="nav-link">Resource</Link>
           <Link to="/contact" className="nav-link">Contact</Link>
+          {user?.role === 'admin' && (
+            <Link to="/admin" className="nav-link">Permission</Link>
+          )}
           {user ? (
             <>
               <span className="user-welcome">

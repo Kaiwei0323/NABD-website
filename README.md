@@ -43,6 +43,12 @@ docker compose up --build
 
 Stop with `Ctrl+C`. Run in background with `docker compose up -d --build`.
 
+### Serving over HTTPS (https://inventecna.com)
+
+To serve the app at **https://inventecna.com** using SSL keys in the `ssl/` folder, use the included nginx config and build the frontend. See **[README.HTTPS.md](README.HTTPS.md)** for step-by-step instructions (nginx, paths for `ssl/domain.cert.pem` and `ssl/private.key.pem`, and running the backend on port 3001).
+
+**After you change code:** see **[DEPLOY-WORKFLOW.md](DEPLOY-WORKFLOW.md)** for how the setup works and exactly what to run when you change frontend, backend, or nginx.
+
 ### Building for Production
 
 ```bash

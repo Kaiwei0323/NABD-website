@@ -1,6 +1,7 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { products } from '../utils/productData'
+import { getApiUrl } from '../utils/api'
 import './ProductDetail.css'
 
 const ProductDetail = () => {
@@ -11,7 +12,7 @@ const ProductDetail = () => {
 
   const canDownload = user && (user.role === 'admin' || user.role === 'customer')
   const canViewDetails = canDownload
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+  const API_URL = getApiUrl()
 
   const handleDownload = async (filePath, fileName) => {
     if (!filePath || !user) return
