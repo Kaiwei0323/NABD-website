@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import Header from './components/Header'
@@ -24,6 +25,21 @@ import UconReflash from './pages/developer/nvidia/UconReflash'
 import './App.css'
 
 function App() {
+  useEffect(() => {
+    const setNoDrag = (el) => {
+      if (el.tagName === 'IMG') el.setAttribute('draggable', 'false')
+      el.querySelectorAll?.('img').forEach((img) => img.setAttribute('draggable', 'false'))
+    }
+    document.querySelectorAll('img').forEach((img) => img.setAttribute('draggable', 'false'))
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((m) => {
+        m.addedNodes.forEach((node) => node.nodeType === 1 && setNoDrag(node))
+      })
+    })
+    observer.observe(document.body, { childList: true, subtree: true })
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <AuthProvider>
       <Router>
