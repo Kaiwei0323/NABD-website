@@ -1,8 +1,44 @@
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import '../../Developer.css'
 
 const QC01WEdlCommandLine = () => {
   const navigate = useNavigate()
+  const [copiedId, setCopiedId] = useState(null)
+
+  const copyCommand = (text, id) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedId(id)
+      setTimeout(() => setCopiedId(null), 2000)
+    })
+  }
+
+  const CopyIcon = () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+    </svg>
+  )
+  const CheckIcon = () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  )
+
+  const CodeBlock = ({ command, id }) => (
+    <div className="dev-sop-inline-code dev-sop-inline-code-with-copy">
+      <code>{command}</code>
+      <button
+        type="button"
+        className="dev-sop-copy-btn"
+        onClick={() => copyCommand(command, id)}
+        title={copiedId === id ? 'Copied' : 'Copy command'}
+        aria-label={copiedId === id ? 'Copied' : 'Copy command'}
+      >
+        {copiedId === id ? <CheckIcon /> : <CopyIcon />}
+      </button>
+    </div>
+  )
 
   return (
     <div className="developer-page">
@@ -38,9 +74,7 @@ const QC01WEdlCommandLine = () => {
               <ol className="dev-sop-steps">
                 <li>Connect QC01W to the host PC over USB cable.</li>
                 <li>From the host PC terminal:
-                  <div className="dev-sop-inline-code">
-                    <code>adb shell reboot edl</code>
-                  </div>
+                  <CodeBlock command="adb shell reboot edl" id="qclinux-edl" />
                 </li>
               </ol>
             </div>
@@ -54,15 +88,11 @@ const QC01WEdlCommandLine = () => {
                 <li>Connect QC01W to the host PC over USB cable.</li>
                 <li>
                   From the host PC terminal, gain root ADB:
-                  <div className="dev-sop-inline-code">
-                    <code>adb root</code>
-                  </div>
+                  <CodeBlock command="adb root" id="ubuntu-root" />
                 </li>
                 <li>
                   Then reboot to EDL:
-                  <div className="dev-sop-inline-code">
-                    <code>adb reboot edl</code>
-                  </div>
+                  <CodeBlock command="adb reboot edl" id="ubuntu-edl" />
                 </li>
               </ol>
             </div>
@@ -76,15 +106,11 @@ const QC01WEdlCommandLine = () => {
                 <li>Connect QC01W to the host PC over USB cable.</li>
                 <li>
                   From the host PC terminal, gain root ADB:
-                  <div className="dev-sop-inline-code">
-                    <code>adb root</code>
-                  </div>
+                  <CodeBlock command="adb root" id="android-root" />
                 </li>
                 <li>
                   Then reboot to EDL:
-                  <div className="dev-sop-inline-code">
-                    <code>adb reboot edl</code>
-                  </div>
+                  <CodeBlock command="adb reboot edl" id="android-edl" />
                 </li>
               </ol>
             </div>

@@ -1,14 +1,3 @@
-/* Allow selecting commands and code on developer pages; rest of site is no-select */
-.developer-page .dev-sop-inline-code,
-.developer-page .dev-sop-inline-code code,
-.developer-page code,
-.developer-page .dev-cred-value {
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-
 .developer-page {
   min-height: calc(100vh - 80px);
   background: linear-gradient(135deg, #f5f7fa 0%, #e0ecff 100%);
@@ -266,6 +255,46 @@
 .dev-sop-sublist {
   margin: 0.5rem 0 0 0;
   padding-left: 1.25rem;
+}
+
+.dev-sop-inline-code-with-copy {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dev-sop-inline-code-with-copy code {
+  flex: 1;
+  min-width: 0;
+}
+
+.dev-sop-copy-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: #2b3a67;
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.25);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dev-sop-copy-btn:hover {
+  background: rgba(102, 126, 234, 0.18);
+  border-color: rgba(102, 126, 234, 0.4);
+  color: #1f2933;
+}
+
+.dev-sop-copy-btn:active {
+  transform: scale(0.95);
+}
+
+.dev-sop-copy-btn svg {
+  display: block;
 }
 
 .dev-sop-inline-code {
