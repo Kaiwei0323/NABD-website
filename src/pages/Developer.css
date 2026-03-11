@@ -1,3 +1,14 @@
+/* Allow selecting commands and code on developer pages; rest of site is no-select */
+.developer-page .dev-sop-inline-code,
+.developer-page .dev-sop-inline-code code,
+.developer-page code,
+.developer-page .dev-cred-value {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
 .developer-page {
   min-height: calc(100vh - 80px);
   background: linear-gradient(135deg, #f5f7fa 0%, #e0ecff 100%);
