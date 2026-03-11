@@ -6,7 +6,7 @@ const Developer = () => {
   const qc01w = useMemo(
     () => ({
       id: 'qc01w-reflash',
-      title: 'QC01W – Reflash Image',
+      title: 'QC01W',
       description: 'Select an operating system to view the reflashing SOP.',
       osOptions: [
         {

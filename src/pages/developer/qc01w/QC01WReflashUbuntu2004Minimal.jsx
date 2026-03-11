@@ -1,5 +1,6 @@
 import QC01WReflashTemplate from './QC01WReflashTemplate'
 import SftpPassword from '../../../components/SftpPassword'
+import { Link } from 'react-router-dom'
 
 const QC01WReflashUbuntu2004Minimal = () => {
   return (
@@ -18,11 +19,24 @@ const QC01WReflashUbuntu2004Minimal = () => {
 
       <div className="dev-sop-block">
         <h3 className="dev-sop-block-title">Enter EDL mode</h3>
-        <p className="dev-sop-block-text">
-          Press and hold the Recovery button (Fn2) with a SIM card eject tool, then plug in the power cable.
-          Keep holding the Fn2 button for 3 seconds. The indication light will remain dark blue, meaning QC01W
-          is in EDL mode.
-        </p>
+        <ol className="dev-sop-steps">
+          <li>
+            <strong>Option 1. Using the Command Line</strong>
+            <br />
+            • Refer to the command line instructions <Link to="/developer/qc01w/edl/command-line">here</Link>.
+          </li>
+          <li>
+            <strong>Option 2. Using Hardware Buttons</strong>
+            <br />
+            • Press and hold the Recovery button (Fn2) using a SIM card eject tool.
+            <br />
+            • While holding the button, plug in the power cable.
+            <br />
+            • Continue holding the Fn2 button for about 3 seconds, then release it.
+            <br />
+            • The indicator light will remain dark blue, indicating that the QC01W is in EDL mode.
+          </li>
+        </ol>
         <img
           className="dev-sop-image"
           src="/image/qc01w/recovery_button.png"
