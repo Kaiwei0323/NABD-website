@@ -119,7 +119,7 @@ const QC01WEdlCommandLine = () => {
               <h3 className="dev-sop-block-title">Ubuntu 24.04</h3>
               <p className="dev-sop-block-text">
                 Command-line EDL entry is not supported on Ubuntu 24.04. Please refer to the{' '}
-                <strong>Using Hardware Buttons</strong> method in the Ubuntu 24.04 SOP page.
+                <strong>Using Hardware Buttons</strong> method in the image reflashing SOP page.
               </p>
             </div>
 
@@ -127,7 +127,7 @@ const QC01WEdlCommandLine = () => {
               <h3 className="dev-sop-block-title">Windows (IoT)</h3>
               <p className="dev-sop-block-text">
                 Command-line EDL entry is not supported on Windows (IoT). Please refer to the{' '}
-                <strong>Using Hardware Buttons</strong> method in the Windows (IoT) SOP page.
+                <strong>Using Hardware Buttons</strong> method in the image reflashing SOP page.
               </p>
             </div>
           </div>
