@@ -1,106 +1,153 @@
 # Inventec Website
 
-A modern, responsive website for displaying Inventec industrial computing products.
+A modern, responsive website for displaying Inventec industrial computing products, with user roles (admin, customer, guest), login, and an admin Permission page for role and user management.
 
 ## Features
 
-- **Header Navigation**: Easy navigation between Home, Product, and Contact pages
-- **Product Page**: Displays all products with images and downloadable specifications
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
-- **Modern UI**: Clean, professional design with smooth animations
+- **Header Navigation**: Home, Product, Developer, Resource, Contact
+- **Product Page**: Products with images and downloadable specifications (role-based)
+- **Login / Register**: User accounts stored in backend (JSON database)
+- **Permission (Admin)**: Admin users can change other users’ roles and delete users
+- **Responsive Design**: Works on desktop, tablet, and mobile
+- **HTTPS**: Optional production setup with nginx and SSL
 
-## Getting Started
+## Prerequisites
 
-### Prerequisites
+- **Local testing**: Node.js (v16+), npm
+- **Production with Docker**: Node.js, npm, Docker and Docker Compose, nginx (for HTTPS)
+- **SSL (optional)**: Certificate and private key in project `ssl/` folder (e.g. `domain.cert.pem`, `private.key.pem`)
 
-- Node.js (v16 or higher)
-- npm or yarn
+---
 
-### Installation
+## 1. Local deployment (testing – website and database)
 
-1. Install dependencies:
+Use this to run the **website** and **database/API** on your machine for development and testing.
+
+### Option A: Run website and backend separately (no Docker)
+
+**Terminal 1 – Backend (database API on port 3001):**
+
 ```bash
+cd server
 npm install
-```
-
-2. Start the development server:
-```bash
 npm run dev
 ```
 
-3. Open your browser and navigate to `http://localhost:3000`
+Leave this running. You should see: `Server is running on http://0.0.0.0:3001`.
 
-### Running with Docker
-
-From the project root (e.g. `NABD-website`):
+**Terminal 2 – Frontend (website on port 3000):**
 
 ```bash
-docker compose up --build
+# From project root
+npm install
+npm run dev
 ```
 
-- **Backend (database)**: http://99.64.152.69:3001  
-- **Frontend (website)**: http://99.64.152.69:3000  
+Then open **http://localhost:3000**. The app will call the API at **http://localhost:3001/api** (no `.env` needed for this).
 
-Stop with `Ctrl+C`. Run in background with `docker compose up -d --build`.
+### Option B: Run both with Docker (website + database in containers)
 
-### Serving over HTTPS (https://inventecna.com)
-
-To serve the app at **https://inventecna.com** using SSL keys in the `ssl/` folder, use the included nginx config and build the frontend. See **[README.HTTPS.md](README.HTTPS.md)** for step-by-step instructions (nginx, paths for `ssl/domain.cert.pem` and `ssl/private.key.pem`, and running the backend on port 3001).
-
-**After you change code:** see **[DEPLOY-WORKFLOW.md](DEPLOY-WORKFLOW.md)** for how the setup works and exactly what to run when you change frontend, backend, or nginx.
-
-### Building for Production
+From the **project root**:
 
 ```bash
+docker compose up -d --build
+```
+
+- **Website**: http://localhost:3000 (Vite dev server in container)
+- **API**: http://localhost:3001 (Node backend in container; database in `./server/database`)
+
+Stop: `docker compose down`.  
+To run only the backend in Docker: `docker compose up -d --build server`.
+
+---
+
+## 2. Production – host website and server (Docker)
+
+Use this to run the **backend in Docker** and serve the **built website** (e.g. with nginx). The database stays in `./server/database` on the host via a volume.
+
+### 2.1 Build the frontend
+
+On the machine where you deploy (or locally, then copy `dist/`):
+
+```bash
+npm install
 npm run build
 ```
 
-The built files will be in the `dist` folder.
+This creates the **dist/** folder (static site). You will serve this with nginx (or any static file server).
 
-## Project Structure
+### 2.2 Run the backend (database/API) in Docker
 
-```
-inventec-website/
-├── public/
-│   ├── Inventec_Logo.jpg
-│   └── product/
-│       └── [product-name]/
-│           ├── image/
-│           └── spec/
-├── src/
-│   ├── components/
-│   │   ├── Header.jsx
-│   │   └── Header.css
-│   ├── pages/
-│   │   ├── Home.jsx
-│   │   ├── Home.css
-│   │   ├── Product.jsx
-│   │   ├── Product.css
-│   │   ├── Contact.jsx
-│   │   └── Contact.css
-│   ├── utils/
-│   │   └── productData.js
-│   ├── App.jsx
-│   ├── App.css
-│   ├── main.jsx
-│   └── index.css
-├── index.html
-├── package.json
-└── vite.config.js
+On the **same server** that will serve the site:
+
+```bash
+docker compose up -d --build server
 ```
 
-## Adding New Products
+- The API listens on **port 3001**.
+- User data is in **./server/database** on the host (bind-mounted).
+- Health check: `curl -s http://localhost:3001/api/health`
 
-To add a new product:
+### 2.3 Serve the website
 
-1. Create a folder in `public/product/` with the product name (e.g., `new-product`)
-2. Add product images in `public/product/new-product/image/`
-3. Add specification PDF in `public/product/new-product/spec/`
-4. Update `src/utils/productData.js` to include the new product
+- **Option 1 – nginx (recommended for HTTPS)**  
+  - Point nginx `root` to your **dist/** folder.  
+  - Proxy **/api/** to **http://127.0.0.1:3001**.  
+  - Use the included **nginx-inventecna.conf** as a template; set `root` to your `dist/` path and fix SSL paths if you use HTTPS.
 
-## Technologies Used
+- **Option 2 – Other**  
+  Serve the contents of **dist/** with any static server (e.g. Apache, or `npx serve -s dist -l 3000`). Ensure the frontend can reach the API (same host or set **VITE_API_URL** before building).
 
-- React 18
-- React Router DOM
-- Vite
-- CSS3
+### 2.4 Production API URL (for login to work)
+
+If the site is served at **https://yourdomain.com** and nginx proxies **/api** to the Docker backend:
+
+- In project root, set in **.env** (before building):  
+  `VITE_API_URL=https://yourdomain.com/api`
+- Run **npm run build** again so the built app uses this URL.
+
+---
+
+## 3. Quick reference – what to run when
+
+| Goal                         | Command |
+|-----------------------------|--------|
+| Local: frontend + backend   | Two terminals: `cd server && npm run dev` and `npm run dev` (root) |
+| Local: both in Docker       | `docker compose up -d --build` |
+| Production: backend only   | `docker compose up -d --build server` |
+| After frontend code change  | `npm run build` (and redeploy `dist/` if needed) |
+| After backend code change   | `docker compose up -d --build server` |
+
+---
+
+## 4. Project structure (main parts)
+
+```
+NABD-website/
+├── public/           # Static assets, product images/PDFs
+├── src/              # React app (pages, components, context, utils)
+├── server/           # Node API (Express), database in server/database/users.json
+├── dist/             # Built frontend (after npm run build) – do not commit
+├── ssl/              # SSL cert/key for HTTPS (do not commit; in .gitignore)
+├── docker-compose.yml
+├── Dockerfile        # Frontend container (Vite dev)
+├── server/Dockerfile # Backend container
+└── nginx-inventecna.conf  # Example nginx config for HTTPS
+```
+
+---
+
+## 5. Adding new products
+
+1. Add a folder under **public/product/** (e.g. `new-product`).
+2. Add images in **public/product/new-product/image/** and PDFs in **spec/**.
+3. Register the product in **src/utils/productData.js**.
+
+---
+
+## 6. Technologies
+
+- React 18, React Router, Vite
+- Node.js, Express (backend)
+- Docker, Docker Compose (optional, for local and production)
+- nginx (optional, for production HTTPS)
