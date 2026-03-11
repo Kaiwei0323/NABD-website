@@ -22,7 +22,12 @@ const QC01WEdlCommandLine = () => {
             Back
           </button>
 
-          <h2 className="dev-sop-page-title">Supported operating systems</h2>
+          <h2 className="dev-sop-page-title">Supported operating systems (OS running on the device before reflashing)</h2>
+          <p className="dev-sop-block-text">
+            If ADB is not installed on your host computer, please refer to the{' '}
+            <Link to="/developer/qc01w/adb-install">Install ADB on the host computer</Link> instructions before running
+            the commands below.
+          </p>
 
           <div className="dev-sop-stack">
             <div className="dev-sop-block">

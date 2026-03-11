@@ -17,6 +17,7 @@ import QC01WReflashQCLinux from './pages/developer/qc01w/QC01WReflashQCLinux'
 import QC01WReflashAndroid from './pages/developer/qc01w/QC01WReflashAndroid'
 import QC01WReflashWindowsIot from './pages/developer/qc01w/QC01WReflashWindowsIot'
 import QC01WEdlCommandLine from './pages/developer/qc01w/QC01WEdlCommandLine'
+import QC01WAdbInstall from './pages/developer/qc01w/QC01WAdbInstall'
 import NcoxNconReflash from './pages/developer/nvidia/NcoxNconReflash'
 import PsoxPsonReflash from './pages/developer/nvidia/PsoxPsonReflash'
 import UconReflash from './pages/developer/nvidia/UconReflash'
@@ -41,6 +42,7 @@ function App() {
               <Route path="/developer/qc01w/reflash/android" element={<QC01WReflashAndroid />} />
               <Route path="/developer/qc01w/reflash/windows-iot" element={<QC01WReflashWindowsIot />} />
               <Route path="/developer/qc01w/edl/command-line" element={<QC01WEdlCommandLine />} />
+              <Route path="/developer/qc01w/adb-install" element={<QC01WAdbInstall />} />
               <Route path="/developer/nvidia/ncox-ncon/:jetpack/:method" element={<NcoxNconReflash />} />
               <Route path="/developer/nvidia/psox-pson/:jetpack/:method" element={<PsoxPsonReflash />} />
               <Route path="/developer/nvidia/ucon/:jetpack/:method" element={<UconReflash />} />
