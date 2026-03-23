@@ -1,0 +1,132 @@
+.resource-detail-page {
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #f5f7fa 0%, #d7e3f7 100%);
+  padding: 2.25rem 1.25rem 3rem;
+}
+
+.resource-detail-container {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.resource-back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #374151;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.resource-detail-hero {
+  border-radius: 18px;
+  padding: 1.8rem;
+  color: #fff;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.2);
+  margin-bottom: 1.35rem;
+}
+
+.resource-detail-hero h1 {
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+}
+
+.resource-detail-hero p {
+  margin: 0;
+  opacity: 0.96;
+}
+
+.resource-detail-hero.factory {
+  background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);
+}
+
+.resource-detail-hero.railway {
+  background: linear-gradient(135deg, #0f766e 0%, #155e75 100%);
+}
+
+.resource-detail-hero.traffic {
+  background: linear-gradient(135deg, #a16207 0%, #7c2d12 100%);
+}
+
+.resource-media-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin-bottom: 1.1rem;
+}
+
+.resource-media-card,
+.resource-info-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+}
+
+.resource-media-card h2,
+.resource-info-card h3 {
+  margin: 0 0 0.75rem;
+  color: #1f2937;
+}
+
+.resource-image,
+.resource-video {
+  width: 100%;
+  border-radius: 10px;
+  background: #e5e7eb;
+}
+
+.resource-image {
+  object-fit: contain;
+  max-height: 360px;
+}
+
+.resource-video {
+  max-height: 360px;
+}
+
+.resource-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+}
+
+.resource-info-card p {
+  color: #374151;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.resource-info-card ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: #374151;
+}
+
+.resource-info-card li {
+  margin-bottom: 0.4rem;
+}
+
+.resource-detail-actions {
+  margin-top: 1.25rem;
+}
+
+.resource-detail-actions .download-btn {
+  border: none;
+  cursor: pointer;
+  padding: 0.8rem 1.2rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color: #fff;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .resource-media-grid,
+  .resource-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resource-detail-hero h1 {
+    font-size: 1.6rem;
+  }
+}
