@@ -72,10 +72,31 @@ const Developer = () => {
   const toggleNvidia = (id) => setNvidiaOpenId((prev) => (prev === id ? null : id))
 
   return (
-    <div className="developer-page">
-      <div className="developer-container">
-        <h1>Developer</h1>
+    <div className="developer-page developer-page--hub">
+      <section className="developer-hero" aria-label="Developer">
+        <div className="developer-hero-media">
+          <img
+            src="/image/nabd-developer/banner.png"
+            alt=""
+            className="developer-hero-img"
+            width={1920}
+            height={700}
+          />
+          <div className="developer-hero-scrim" aria-hidden="true" />
+        </div>
+        <div className="developer-hero-inner">
+          <div className="developer-hero-copy">
+            <p className="developer-hero-kicker">Documentation</p>
+            <h1>Developer</h1>
+            <p className="developer-hero-lead">
+              Reflash guides and SOPs for Qualcomm QC01W and NVIDIA edge platforms.
+            </p>
+          </div>
+        </div>
+      </section>
 
+      <div className="developer-main developer-main--hub">
+        <div className="developer-container">
         <section className="developer-section">
           <h2>Qualcomm Platforms</h2>
 
@@ -180,6 +201,7 @@ const Developer = () => {
             })}
           </div>
         </section>
+        </div>
       </div>
     </div>
   )

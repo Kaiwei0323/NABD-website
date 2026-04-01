@@ -4,6 +4,92 @@
   padding: 4rem 2rem;
 }
 
+.developer-page--hub {
+  padding: 0;
+  background: none;
+}
+
+/* —— Hub hero banner —— */
+.developer-hero {
+  position: relative;
+  min-height: min(52vw, 380px);
+  max-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+
+.developer-hero-media {
+  position: absolute;
+  inset: 0;
+  background: #0f172a;
+}
+
+.developer-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.developer-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(15, 23, 42, 0.88) 0%,
+    rgba(15, 23, 42, 0.55) 45%,
+    rgba(30, 41, 59, 0.35) 100%
+  );
+}
+
+.developer-hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 2.5rem 1.75rem;
+}
+
+.developer-hero-copy {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.developer-hero-kicker {
+  margin: 0 0 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.developer-hero h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.85rem, 4vw, 2.65rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: #fff;
+}
+
+.developer-hero-lead {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.developer-main--hub {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e0ecff 100%);
+  padding: 0 2rem 4rem;
+}
+
 .developer-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -32,7 +118,7 @@
   margin-top: 2.5rem;
 }
 
-.developer-section:first-of-type {
+.developer-main--hub .developer-section:first-of-type {
   margin-top: 0;
 }
 
@@ -478,8 +564,24 @@
 }
 
 @media (max-width: 768px) {
-  .developer-page {
+  .developer-page:not(.developer-page--hub) {
     padding: 2.5rem 1rem;
+  }
+
+  .developer-hero {
+    margin-bottom: 1.75rem;
+  }
+
+  .developer-hero-inner {
+    padding: 2rem 1.25rem;
+  }
+
+  .developer-hero-lead {
+    font-size: 0.98rem;
+  }
+
+  .developer-main--hub {
+    padding: 0 1rem 2.5rem;
   }
 
   .developer-container h1 {

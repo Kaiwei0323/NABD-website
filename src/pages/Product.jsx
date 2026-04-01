@@ -75,12 +75,30 @@ const Product = () => {
 
   return (
     <div className="product-page">
-      <div className="product-header">
-        <h1>Our Products</h1>
-        <p>Explore our range of industrial computing solutions</p>
-      </div>
-      
-      <div className="category-filters">
+      <section className="product-hero" aria-label="Products">
+        <div className="product-hero-media">
+          <img
+            src="/image/nabd-product/banner.jpg"
+            alt=""
+            className="product-hero-img"
+            width={1920}
+            height={700}
+          />
+          <div className="product-hero-scrim" aria-hidden="true" />
+        </div>
+        <div className="product-hero-inner">
+          <div className="product-hero-copy">
+            <p className="product-hero-kicker">Products</p>
+            <h1>Our Products</h1>
+            <p className="product-hero-lead">
+              Explore our range of industrial computing solutions
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div className="product-main">
+        <div className="category-filters">
         {Object.entries(categories).map(([key, category]) => (
           <button
             key={key}
@@ -90,9 +108,9 @@ const Product = () => {
             {category.name}
           </button>
         ))}
-      </div>
-      
-      <div className="product-grid">
+        </div>
+
+        <div className="product-grid">
         {filteredProducts.map((product) => (
           <div 
             key={product.id} 
@@ -212,6 +230,7 @@ const Product = () => {
             </div>
           </div>
         ))}
+        </div>
       </div>
     </div>
   )

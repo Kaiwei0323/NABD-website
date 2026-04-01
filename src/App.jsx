@@ -7,6 +7,8 @@ import Home from './pages/Home'
 import Product from './pages/Product'
 import ProductDetail from './pages/ProductDetail'
 import Resource from './pages/Resource'
+import CaseStudyDetail from './pages/CaseStudyDetail'
+import About from './pages/About'
 import Contact from './pages/Contact'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -50,6 +52,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/product" element={<Product />} />
               <Route path="/product/:productId" element={<ProductDetail />} />
+              <Route path="/resource/case/:slug" element={<CaseStudyDetail />} />
               <Route path="/resource" element={<Resource />} />
               <Route path="/developer" element={<Developer />} />
               <Route path="/developer/qc01w/reflash/ubuntu-20-04-minimal" element={<QC01WReflashUbuntu2004Minimal />} />
@@ -62,6 +65,7 @@ function App() {
               <Route path="/developer/nvidia/ncox-ncon/:jetpack/:method" element={<NcoxNconReflash />} />
               <Route path="/developer/nvidia/psox-pson/:jetpack/:method" element={<PsoxPsonReflash />} />
               <Route path="/developer/nvidia/ucon/:jetpack/:method" element={<UconReflash />} />
+              <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />

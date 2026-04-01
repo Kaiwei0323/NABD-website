@@ -1,0 +1,23 @@
+<div class="case-prose">
+  <p>Inventec, in collaboration with Qualcomm Technologies, Inc., has developed the AIM-Edge QC01—a versatile, compact, fanless edge AI box powered by the Qualcomm Dragonwing QCS6490 processor. This solution brings AI performance, connectivity, and power efficiency to industrial and commercial IoT across smart retail, security, smart transportation, building infrastructure, and smart cities.</p>
+  <p>One leading global innovation and engineering consulting firm has leveraged this platform to boost productivity and efficiency for railway grade-crossing monitoring. By migrating AI inference to the Inventec AIM-Edge QC01 with the Qualcomm Hexagon NPU, the customer reduced memory use by nearly one-third and CPU load by 5%, achieving response times as low as 18 milliseconds per frame—reducing cloud dependence, improving local decision-making, and scaling to multiple camera inputs.</p>
+  <h2>Introduction</h2>
+  <p>Demand for real-time AI at the edge drives the need for powerful yet energy-efficient platforms. Dragonwing QCS6490 combines a Qualcomm Kryo 670 CPU with a Hexagon AI accelerator delivering up to <strong>12.5 TOPS</strong> under low power, plus Wi-Fi 6/6E and multi-camera support.</p>
+  <p>Inventec's AIM-Edge QC01 targets fanless operation, compact installation, multi-OS compatibility, and use cases from queue analytics and slip-and-fall detection to vehicle counting and fleet management.</p>
+  <h2>Customer application: railway crossing safety</h2>
+  <p>Detecting stalled vehicles at grade crossings requires timely alerts. The customer used YOLOv8 object detection (PyTorch) for real-time hazard prediction. Initially, heavy reliance on cloud storage and alerts caused latency and memory concerns; multi-camera capacity was limited.</p>
+  <p>Migrating to AIM-Edge QC01 on Dragonwing QCS6490 delivered:</p>
+  <ul>
+    <li><strong>Memory and CPU:</strong> Memory usage down 32.92%, CPU load down 5%, inference about 18 ms per frame.</li>
+    <li><strong>Multi-camera scalability:</strong> Triple ISP supports up to five concurrent 4K streams for complex rail safety views.</li>
+    <li><strong>Reduced cloud dependence:</strong> Lower network traffic and latency; solution cost reduced by roughly 30%.</li>
+    <li><strong>Efficient NPU use:</strong> Hexagon NPU runs AI workloads while CPU/GPU stay free for other tasks.</li>
+    <li><strong>Long lifecycle:</strong> Enterprise-grade hardware with prolonged OS and security updates.</li>
+  </ul>
+  <figure class="case-prose-figure">
+    <img src="/image/nabd-case-detail/qualcomm-railway.png" alt="Edge AI QC01 railway application" width="960" height="540" loading="lazy" />
+  </figure>
+  <h2>Technical integration highlights</h2>
+  <p>The customer adapted their pipeline without altering the base model: ONNX to Qualcomm DLC with quantization (FP16 activations, INT8 weights), offline graph caches via Qualcomm Neural Processing SDK to cut initialization latency, and deployment on Ubuntu using the Snapdragon NPE stack.</p>
+  <p>This approach supports adding further railway safety models (crowd monitoring, weapon/violence detection) with faster rollout. <a href="/contact">Contact Inventec NA</a> to discuss AIM-Edge QC01.</p>
+</div>
