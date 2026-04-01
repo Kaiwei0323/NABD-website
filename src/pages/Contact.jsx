@@ -4,7 +4,7 @@ import './Contact.css'
 const Contact = () => {
   useEffect(() => {
     const prev = document.title
-    document.title = 'Contact | Inventec NA'
+    document.title = 'Inventec NA'
     return () => {
       document.title = prev
     }
@@ -24,7 +24,7 @@ const Contact = () => {
           <div className="contact-hero-scrim" aria-hidden="true" />
         </div>
         <div className="contact-hero-inner">
-          <p className="contact-hero-eyebrow">Inventec NA</p>
+          <p className="contact-hero-eyebrow">Inventec NABD</p>
           <h1 className="contact-hero-title">Contact us</h1>
           <p className="contact-hero-lead">
             Reach out for sales, technical support, or partnership opportunities.
