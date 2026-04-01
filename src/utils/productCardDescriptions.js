@@ -1,0 +1,26 @@
+/** One-line blurbs for product grid cards (Product page). */
+export const productCardDescriptions = {
+  '32e': '8" rugged Android tablet for field service, logistics, and industrial mobility.',
+  '32p': '8" rugged Android handheld with bright display and flexible connectivity options.',
+  '53r': '10.1" Windows IoT tablet for retail, hospitality, and mobile workforce apps.',
+  '63e': '13.3" rugged Windows IoT tablet for demanding enterprise, clinical, and industrial use.',
+  'agx-orin': 'Jetson AGX Orin-based platform for robotics, perception, and autonomous edge AI.',
+  aioox: 'Wall-mount all-in-one edge system combining display with NVIDIA Orin compute.',
+  'edge-pro-1u': '1U rack server for edge AI, virtualization, and enterprise workloads.',
+  'edge-pro-2u': '2U rack server with room for GPUs and storage for heavier edge compute.',
+  'igx-orin': 'NVIDIA IGX Orin 2U system for industrial AI, robotics, and regulated environments.',
+  'igx-thor': 'NVIDIA IGX Thor (Blackwell) 2U server for physical AI and large-model inference.',
+  m185: '18.5" industrial panel PC with PCAP touch—ideal for HMI, kiosk, and factory UI.',
+  m215t: '21.5" panel PC for production lines, digital signage, and shop-floor visualization.',
+  m240: '24" industrial all-in-one for control rooms, monitoring, and rich operator interfaces.',
+  momi13: '13" mobile panel PC for medical carts, clinical workflows, and portable HMI.',
+  ncon: 'Compact NVIDIA Jetson Orin Nano edge box for low-power AI at the edge.',
+  ncox: 'NVIDIA Jetson Orin NX edge box—more AI throughput in a small footprint.',
+  'nx-h3003':
+    'Fanless Intel Core edge gateway with dual-WAN 5G/Ethernet, TSN, and M.2 slots for AI and NVMe.',
+  psox: 'AIM-Edge PSOX: NVIDIA Jetson Orin compact edge box for smart manufacturing and IoT.',
+  pson: 'AIM-Edge PSON: NVIDIA Jetson Orin Nano compact edge box.',
+  qc01: 'Qualcomm QCS6490 edge AI box for vision, IoT, and smart infrastructure.',
+  top1: 'TOP1 Jetson Orin NX platform for robotics, AMRs, and real-time perception.',
+  ucon: 'UCON Orin Nano edge box with IP66 water and dust resistance for outdoor and harsh-environment AI.',
+}

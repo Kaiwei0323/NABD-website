@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { products } from '../utils/productData'
+import { productCardDescriptions } from '../utils/productCardDescriptions'
 import { getApiUrl } from '../utils/api'
 import './Product.css'
 
@@ -23,7 +24,7 @@ const Product = () => {
     handheld: { name: 'Handheld', products: ['32e', '32p', '53r', '63e', 'momi13'] },
     'all-in-one': { name: 'All-in-One', products: ['m185', 'm215t', 'm240'] },
     edge: { name: 'Edge', products: ['aioox', 'ncon', 'ncox', 'nx-h3003', 'pson', 'psox', 'qc01', 'top1', 'ucon'] },
-    'edge-server': { name: 'Edge Server', products: ['agx-orin', 'edge-pro-1u', 'edge-pro-2u', 'igx-orin'] }
+    'edge-server': { name: 'Edge Server', products: ['agx-orin', 'edge-pro-1u', 'edge-pro-2u', 'igx-orin', 'igx-thor'] }
   }
 
   // Filter products based on selected category
@@ -141,6 +142,9 @@ const Product = () => {
             </div>
             <div className="product-info">
               <h2 className="product-name">{product.name}</h2>
+              {productCardDescriptions[product.id] ? (
+                <p className="product-card-desc">{productCardDescriptions[product.id]}</p>
+              ) : null}
               <div className="download-links">
                 {canDownload ? (
                   <>

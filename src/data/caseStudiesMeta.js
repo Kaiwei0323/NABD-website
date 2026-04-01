@@ -22,7 +22,7 @@ export const caseStudiesList = [
     slug: 'igx-thor-platform',
     title:
       'Inventec Edge IGX 2U Atlas Server: A Production-Ready Platform for Physical AI Powered by NVIDIA IGX Thor',
-    tag: 'NVIDIA IGX',
+    tag: 'NVIDIA IGX THOR',
     heroImage: '/image/nabd-case-detail/igx-thor-hero.jpg',
     gridImage: '/image/nabd-case/case-igx-thor.jpg',
     gridImageWidth: 580,

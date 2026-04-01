@@ -744,6 +744,69 @@ export const products = [
     }
   },
   {
+    id: 'igx-thor',
+    name: 'IGX-THOR',
+    imagePath: '/product/igx-thor/image/IGX-Thor-series_600X600.png',
+    specInfo: {
+      model: 'IGX Thor series',
+      form_factor: '2U AI Edge',
+      cpu: {
+        type: '12-core Arm Cortex-A78AE v8.2 64-bit',
+        cache: {
+          L2: '3MB',
+          L3: '6MB'
+        }
+      },
+      gpu: {
+        integrated: {
+          architecture: 'NVIDIA Blackwell (IGX Thor)',
+          cuda_cores: 8192,
+          tensor_cores: 256
+        },
+        optional: {
+          model: 'NVIDIA RTX6000 Ada',
+          architecture: 'NVIDIA Ampere',
+          memory: '48GB GDDR6',
+          cuda_cores: 10752,
+          tensor_cores: 336
+        }
+      },
+      ai_performance: 'Up to ~5,581 FP4 sparse TFLOPS (peak, configuration dependent)',
+      ram: '64GB LPDDR6',
+      storage: '1TB SSD',
+      ethernet: [
+        { type: '100GbE QSFP28', count: 2 },
+        { type: '1GbE RJ45', count: 2 }
+      ],
+      i_o: {
+        usb: [
+          { type: 'USB3.2 Type-A', count: 4 },
+          { type: 'USB3.2 Type-C', count: 1 }
+        ],
+        hdmi: [{ input: 1, note: 'No display output from HDMI port' }],
+        displayport: [{ output: 1 }, { optional_rtx6000_ada_dp: 4 }],
+        audio: [
+          { type: 'Line-out', count: 1 },
+          { type: 'MIC', count: 1 }
+        ],
+        pcie: [
+          { slot_type: 'Gen5 single width', x: 8 },
+          { slot_type: 'Gen5 double width', x: 16 }
+        ]
+      },
+      expansion_slots: 'PCIe slots as listed above',
+      display_interface: ['Yuan SC400 N2-L HDMI (included)', 'Optional RTX6000 Ada DP'],
+      power_supply: '860W ATX',
+      features: [
+        'High-performance AI computing with NVIDIA IGX Thor (Blackwell) SoC',
+        'Industrial-grade reliability and long-term support',
+        'Scalable and secure for enterprise protection and industrial automation',
+        'Optimized for healthcare, robotics, and industrial edge AI applications',
+        'Seamless integration with NVIDIA AI Enterprise and IGX / Jetson-class software stacks'
+      ]
+    }
+  },
+  {
     id: 'm185',
     name: 'M185',
     imagePath: '/product/m185/image/M185_600X600.png',
