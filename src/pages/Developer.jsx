@@ -1,6 +1,7 @@
 import './Developer.css'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import DeveloperContactCta from '../components/DeveloperContactCta'
 
 const Developer = () => {
   const qc01w = useMemo(
@@ -201,6 +202,7 @@ const Developer = () => {
             })}
           </div>
         </section>
+        <DeveloperContactCta />
         </div>
       </div>
     </div>

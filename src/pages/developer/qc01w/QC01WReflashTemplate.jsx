@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import '../../Developer.css'
+import DeveloperContactCta from '../../../components/DeveloperContactCta'
 
 const QC01WReflashTemplate = ({ title, steps = [], children }) => {
   return (
@@ -23,6 +24,7 @@ const QC01WReflashTemplate = ({ title, steps = [], children }) => {
             </ol>
           ) : null}
         </div>
+        <DeveloperContactCta />
       </div>
     </div>
   )

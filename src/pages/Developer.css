@@ -1,7 +1,7 @@
 .developer-page {
   min-height: calc(100vh - 80px);
   background: linear-gradient(135deg, #f5f7fa 0%, #e0ecff 100%);
-  padding: 4rem 2rem;
+  padding: 4rem 2rem 5.75rem;
 }
 
 .developer-page--hub {
@@ -87,7 +87,7 @@
 
 .developer-main--hub {
   background: linear-gradient(135deg, #f5f7fa 0%, #e0ecff 100%);
-  padding: 0 2rem 4rem;
+  padding: 0 2rem 5.75rem;
 }
 
 .developer-container {
@@ -563,9 +563,209 @@
   background: #fff;
 }
 
+/* —— Developer contact FAB (bottom right) —— */
+.dev-contact-fab {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 950;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+  max-width: calc(100vw - 2.5rem);
+  filter: drop-shadow(0 12px 28px rgba(49, 46, 129, 0.2));
+}
+
+.dev-contact-fab-panel {
+  position: relative;
+  overflow: hidden;
+  width: min(19.5rem, calc(100vw - 2.5rem));
+  padding: 1.15rem 1.25rem 1.25rem;
+  border-radius: 18px;
+  background: linear-gradient(165deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.8) inset,
+    0 24px 48px rgba(15, 23, 42, 0.14),
+    0 8px 16px rgba(30, 27, 75, 0.08);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px) scale(0.97);
+  transition:
+    opacity 0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    transform 0.22s cubic-bezier(0.33, 1, 0.68, 1),
+    visibility 0.22s;
+  pointer-events: none;
+}
+
+.dev-contact-fab-panel--open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.dev-contact-fab-panel[hidden] {
+  display: none !important;
+}
+
+.dev-contact-fab-panel-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #6366f1, #a855f7, #6366f1);
+  opacity: 0.95;
+}
+
+.dev-contact-fab-panel-kicker {
+  margin: 0.35rem 0 0.2rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: #6366f1;
+}
+
+.dev-contact-fab-panel-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.dev-contact-fab-panel-desc {
+  margin: 0 0 1rem;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.dev-contact-fab-mail {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.06) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.22);
+  text-decoration: none;
+  color: #3730a3;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.dev-contact-fab-mail:hover {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.14) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border-color: rgba(99, 102, 241, 0.38);
+  transform: translateY(-1px);
+}
+
+.dev-contact-fab-mail:focus-visible {
+  outline: 2px solid #818cf8;
+  outline-offset: 2px;
+}
+
+.dev-contact-fab-mail-icon {
+  flex-shrink: 0;
+  display: flex;
+  color: #6366f1;
+  margin-top: 0.05rem;
+}
+
+.dev-contact-fab-mail-text {
+  font-size: 0.88rem;
+  font-weight: 600;
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+.dev-contact-fab-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  padding: 0.55rem 1.1rem 0.55rem 0.55rem;
+  min-width: 0;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  color: #fff;
+  background: linear-gradient(145deg, #4f46e5 0%, #6366f1 42%, #7c3aed 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.2) inset,
+    0 12px 32px rgba(79, 70, 229, 0.42),
+    0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dev-contact-fab-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.25) inset,
+    0 16px 40px rgba(79, 70, 229, 0.48),
+    0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+.dev-contact-fab-btn:focus-visible {
+  outline: 2px solid #c7d2fe;
+  outline-offset: 3px;
+}
+
+.dev-contact-fab-btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.65rem;
+  height: 2.65rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.dev-contact-fab-btn-textwrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding-right: 0.35rem;
+}
+
+.dev-contact-fab-btn-line1 {
+  font-size: 0.94rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.dev-contact-fab-btn-line2 {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.88;
+  margin-top: 0.05rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dev-contact-fab-panel {
+    transition: none;
+  }
+
+  .dev-contact-fab-btn:hover,
+  .dev-contact-fab-mail:hover {
+    transform: none;
+  }
+}
+
 @media (max-width: 768px) {
   .developer-page:not(.developer-page--hub) {
-    padding: 2.5rem 1rem;
+    padding: 2.5rem 1rem 5.25rem;
   }
 
   .developer-hero {
@@ -581,7 +781,7 @@
   }
 
   .developer-main--hub {
-    padding: 0 1rem 2.5rem;
+    padding: 0 1rem 5.25rem;
   }
 
   .developer-container h1 {
@@ -603,6 +803,26 @@
 
   .dev-sop-image {
     max-width: 100%;
+  }
+
+  .dev-contact-fab {
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .dev-contact-fab-btn {
+    padding: 0.5rem 0.85rem 0.5rem 0.5rem;
+    gap: 0.6rem;
+  }
+
+  .dev-contact-fab-btn-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .dev-contact-fab-panel {
+    width: min(100%, calc(100vw - 2rem));
+    padding: 1rem 1.1rem 1.1rem;
   }
 }
 

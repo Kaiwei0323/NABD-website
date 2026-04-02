@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import '../../Developer.css'
+import DeveloperContactCta from '../../../components/DeveloperContactCta'
 
 const QC01WEdlCommandLine = () => {
   const navigate = useNavigate()
@@ -132,6 +133,7 @@ const QC01WEdlCommandLine = () => {
             </div>
           </div>
         </div>
+        <DeveloperContactCta />
       </div>
     </div>
   )

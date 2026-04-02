@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import '../../Developer.css'
+import DeveloperContactCta from '../../../components/DeveloperContactCta'
 
 const QC01WAdbInstall = () => {
   const navigate = useNavigate()
@@ -90,6 +91,7 @@ const QC01WAdbInstall = () => {
             </div>
           </div>
         </div>
+        <DeveloperContactCta />
       </div>
     </div>
   )

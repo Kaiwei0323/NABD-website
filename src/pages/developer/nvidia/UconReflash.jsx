@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useMemo } from 'react'
 import '../../Developer.css'
 import SftpPassword from '../../../components/SftpPassword'
+import DeveloperContactCta from '../../../components/DeveloperContactCta'
 
 const UconReflash = () => {
   const { jetpack, method } = useParams()
@@ -102,6 +103,7 @@ const UconReflash = () => {
             </p>
           )}
         </div>
+        <DeveloperContactCta />
       </div>
     </div>
   )
