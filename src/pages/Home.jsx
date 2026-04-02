@@ -1,7 +1,16 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { products } from '../utils/productData'
 import './Home.css'
+
+const HERO_BANNERS = [
+  '/image/nabd-home/banner-1.jpg',
+  '/image/nabd-home/banner-2.jpg',
+  '/image/nabd-home/banner-3.jpg',
+  '/image/nabd-home/banner-4.jpg',
+]
+
+const BANNER_ROTATE_MS = 6500
 
 const FEATURED_ITEMS = [
   {
@@ -41,20 +50,33 @@ const FEATURED_ITEMS = [
   },
   {
     id: 'agx-orin',
-    title: 'NVIDIA Jetson',
-    tag: 'Jetson AGX Orin',
+    title: 'AGX',
+    tag: 'NVIDIA AGX',
     description:
-      'Jetson AGX Orin-based platform for robotics, perception, and autonomous systems at the edge.',
+      'NVIDIA AGX platform for robotics, perception, and autonomous systems at the edge.',
   },
 ]
 
 const Home = () => {
+  const [bannerIndex, setBannerIndex] = useState(0)
+
   useEffect(() => {
     const prev = document.title
     document.title = 'Inventec NA'
     return () => {
       document.title = prev
     }
+  }, [])
+
+  useEffect(() => {
+    if (HERO_BANNERS.length <= 1) return
+    if (typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return
+    }
+    const id = window.setInterval(() => {
+      setBannerIndex((i) => (i + 1) % HERO_BANNERS.length)
+    }, BANNER_ROTATE_MS)
+    return () => window.clearInterval(id)
   }, [])
 
   const featuredCards = useMemo(() => {
@@ -75,23 +97,44 @@ const Home = () => {
 
   return (
     <div className="home">
-      <section className="hero" aria-label="Welcome">
-        <video className="hero-video" autoPlay loop muted playsInline>
-          <source src="/video/traffic.mp4" type="video/mp4" />
-        </video>
+      <section
+        className="hero"
+        aria-label="Welcome"
+        aria-roledescription="carousel"
+      >
+        <div className="hero-carousel" aria-hidden="true">
+          {HERO_BANNERS.map((src, i) => (
+            <div
+              key={src}
+              className={`hero-slide ${i === bannerIndex ? 'hero-slide--active' : ''}`}
+            >
+              <img
+                src={src}
+                alt=""
+                className="hero-slide-img"
+                width={1920}
+                height={700}
+                loading={i === 0 ? 'eager' : 'lazy'}
+              />
+            </div>
+          ))}
+        </div>
         <div className="hero-overlay" />
-        <div className="hero-content">
-          <p className="hero-eyebrow">Inventec NABD</p>
-          <h1>North America edge AI &amp; industrial computing</h1>
-          <p className="hero-description">
-            High-performance, AI-ready platforms for real-time workloads—manufacturing, healthcare,
-            retail, smart cities, and transportation—with local support from Silicon Valley.
-          </p>
-          <div className="hero-actions">
-            <Link to="/product" className="order-button">
-              Browse products
-            </Link>
-          </div>
+        <h1 className="hero-sr-only">
+          Inventec NABD — North America edge AI and industrial computing
+        </h1>
+        <div className="hero-banner-dots" role="tablist" aria-label="Banner slides">
+          {HERO_BANNERS.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              role="tab"
+              aria-selected={i === bannerIndex}
+              aria-label={`Show banner ${i + 1} of ${HERO_BANNERS.length}`}
+              className={`hero-banner-dot ${i === bannerIndex ? 'hero-banner-dot--active' : ''}`}
+              onClick={() => setBannerIndex(i)}
+            />
+          ))}
         </div>
       </section>
 
@@ -101,7 +144,7 @@ const Home = () => {
             <p className="home-featured-kicker">Product spotlight</p>
             <h2 id="home-featured-heading">Featured platforms</h2>
             <p className="home-featured-lead">
-              QC01, Edge Pro rack systems, and NVIDIA IGX Thor, IGX Orin, and Jetson AGX Orin
+              QC01, Edge Pro rack systems, and NVIDIA IGX Thor, IGX Orin, and NVIDIA AGX
               platforms—explore specs and downloads on each product page.
             </p>
           </div>
