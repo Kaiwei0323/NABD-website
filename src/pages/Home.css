@@ -1,6 +1,8 @@
 .home {
   min-height: calc(100vh - 80px);
   background: #eef1f6;
+  overflow-x: clip;
+  width: 100%;
 }
 
 .hero {
@@ -8,6 +10,7 @@
   overflow: hidden;
   min-height: min(88vh, 820px);
   max-height: 920px;
+  touch-action: pan-y pinch-zoom;
 }
 
 .hero-carousel {
@@ -35,6 +38,13 @@
   object-fit: cover;
   object-position: center;
   display: block;
+}
+
+@media (max-width: 640px) {
+  .hero-slide-img {
+    /* Bias focal point upward on narrow screens (less “empty sky” crop) */
+    object-position: center 35%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -285,17 +295,49 @@
 }
 
 @media (max-width: 768px) {
+  .home {
+    /* Header stacks (~2 rows); avoid forcing extra viewport gap */
+    min-height: 0;
+  }
+
   .hero {
-    min-height: min(78vh, 640px);
+    /* One band avoids min-height vs max-height fighting on short viewports */
+    min-height: unset;
+    height: clamp(200px, 40svh, 320px);
     max-height: none;
   }
 
+  .hero-banner-dots {
+    bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    padding: 0.45rem 0.75rem;
+    gap: 0.35rem;
+  }
+
   .home-featured {
-    padding: 2.5rem 1.25rem 3.25rem;
+    padding: 1.75rem max(1rem, env(safe-area-inset-left))
+      calc(2.5rem + env(safe-area-inset-bottom, 0px))
+      max(1rem, env(safe-area-inset-right));
   }
 
   .home-featured-head {
     margin-bottom: 1.85rem;
+    max-width: none;
+    text-align: left;
+  }
+
+  .home-featured-kicker {
+    font-size: 0.7rem;
+  }
+
+  .home-featured-head h2 {
+    font-size: clamp(1.35rem, 5vw, 1.65rem);
+  }
+
+  .home-featured-lead {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    overflow-wrap: break-word;
   }
 
   .home-product-grid {
@@ -306,10 +348,64 @@
   .home-product-thumb {
     aspect-ratio: 16 / 10;
   }
+
+  .home-product-body {
+    padding: 1rem 1.15rem 1.2rem;
+  }
+
+  .home-featured-footer {
+    margin-top: 2rem;
+  }
+
+  .home-view-all {
+    width: 100%;
+    max-width: 22rem;
+    margin-inline: auto;
+    padding: 0.9rem 1.25rem;
+    box-sizing: border-box;
+  }
+}
+
+/* Fallback when svh is not supported (older mobile browsers) */
+@supports not (height: 1svh) {
+  @media (max-width: 768px) {
+    .hero {
+      height: clamp(200px, 40vh, 320px);
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-banner-dot {
+    /* Larger visible control + easier tap (44px+ row via padding) */
+    width: 11px;
+    height: 11px;
+    padding: 14px;
+    margin: -14px;
+    box-sizing: content-box;
+    background-clip: content-box;
+  }
+
+  .hero-banner-dot--active {
+    width: 26px;
+  }
+
+  .hero-banner-dots {
+    gap: 0.2rem;
+    padding: 0.4rem 0.5rem;
+  }
 }
 
 @media (max-width: 480px) {
   .home-product-name {
     font-size: 1.1rem;
+  }
+
+  .home-product-desc {
+    font-size: 0.8125rem;
+  }
+
+  .home-product-card {
+    border-radius: 14px;
   }
 }
