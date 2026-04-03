@@ -18,8 +18,7 @@ const About = () => {
             src="/image/nabd-about/top-banner.png"
             alt=""
             className="about-hero-img"
-            width={1920}
-            height={700}
+            decoding="async"
           />
           <div className="about-hero-scrim" aria-hidden="true" />
         </div>

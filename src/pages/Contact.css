@@ -2,6 +2,8 @@
   min-height: calc(100vh - 80px);
   background: #eef1f6;
   color: #1e293b;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 .contact-hero {
@@ -13,20 +15,39 @@
   justify-content: center;
   color: #fff;
   overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .contact-hero-media {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   background: #0f172a;
+  min-width: 0;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 .contact-hero-img {
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
+  max-width: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
 }
 
 .contact-hero-scrim {
@@ -242,6 +263,11 @@ a.contact-card:hover .contact-card-value {
   .contact-hero {
     min-height: min(48vw, 220px);
     max-height: 280px;
+  }
+
+  .contact-hero-img {
+    object-fit: contain;
+    object-position: center center;
   }
 
   .contact-hero-inner {

@@ -2,6 +2,8 @@
   min-height: calc(100vh - 80px);
   background: linear-gradient(135deg, #f5f7fa 0%, #e0ecff 100%);
   padding: 4rem 2rem 5.75rem;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 .developer-page--hub {
@@ -20,20 +22,39 @@
   color: #fff;
   overflow: hidden;
   margin-bottom: 2.5rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .developer-hero-media {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   background: #0f172a;
+  min-width: 0;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 .developer-hero-img {
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
+  max-width: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
 }
 
 .developer-hero-scrim {
@@ -770,6 +791,11 @@
 
   .developer-hero {
     margin-bottom: 1.75rem;
+  }
+
+  .developer-hero-img {
+    object-fit: contain;
+    object-position: center center;
   }
 
   .developer-hero-inner {

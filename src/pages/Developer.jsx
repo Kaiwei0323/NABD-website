@@ -80,8 +80,7 @@ const Developer = () => {
             src="/image/nabd-developer/banner.png"
             alt=""
             className="developer-hero-img"
-            width={1920}
-            height={700}
+            decoding="async"
           />
           <div className="developer-hero-scrim" aria-hidden="true" />
         </div>

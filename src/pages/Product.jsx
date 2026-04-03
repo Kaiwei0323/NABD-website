@@ -82,8 +82,7 @@ const Product = () => {
             src="/image/nabd-product/banner.jpg"
             alt=""
             className="product-hero-img"
-            width={1920}
-            height={700}
+            decoding="async"
           />
           <div className="product-hero-scrim" aria-hidden="true" />
         </div>
