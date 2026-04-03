@@ -70,13 +70,6 @@
   box-sizing: border-box;
 }
 
-@media (max-width: 640px) {
-  .hero-slide-img {
-    /* Bias focal point upward on narrow screens (less “empty sky” crop) */
-    object-position: center 35%;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .hero-slide {
     transition: none;
@@ -354,6 +347,12 @@
     min-height: unset;
     height: clamp(200px, 40svh, 320px);
     max-height: none;
+  }
+
+  /* Full banner visible (no crop); letterboxing uses .hero-carousel background */
+  .hero-slide-img {
+    object-fit: contain;
+    object-position: center center;
   }
 
   .hero-banner-dots {
