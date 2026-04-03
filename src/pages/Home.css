@@ -19,20 +19,31 @@
 
 .hero-carousel {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   z-index: 0;
   background: #0f172a;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .hero-slide {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   opacity: 0;
   transition: opacity 1s ease-in-out;
   pointer-events: none;
-  /* Don’t let intrinsic image width expand the slide past the hero */
   min-width: 0;
   overflow: hidden;
 }
@@ -42,14 +53,21 @@
 }
 
 .hero-slide-img {
+  /* Absolutely fill slide so % sizing is tied to hero, not intrinsic pixel width */
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
-  max-width: 100%;
   height: 100%;
+  max-width: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
-  /* width/height attributes on <img> are huge; cap layout contribution */
   min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
 }
 
 @media (max-width: 640px) {
