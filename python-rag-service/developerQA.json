@@ -1,0 +1,453 @@
+{
+  "title": "Inventec NA - Developer Documentation (Sample Customer Q&A)",
+  "sources": [
+    "https://www.inventecna.com/developer",
+    "https://www.inventecna.com/developer/qc01w/reflash/ubuntu-20-04-minimal",
+    "https://www.inventecna.com/developer/qc01w/reflash/ubuntu-24-04",
+    "https://www.inventecna.com/developer/qc01w/reflash/qclinux",
+    "https://www.inventecna.com/developer/qc01w/reflash/android",
+    "https://www.inventecna.com/developer/qc01w/reflash/windows-iot",
+    "https://www.inventecna.com/developer/qc01w/edl/command-line",
+    "https://www.inventecna.com/developer/qc01w/adb-install",
+    "https://www.inventecna.com/developer/nvidia/ncox-ncon/jp-5-1-2/ota",
+    "https://www.inventecna.com/image_reflash/ncox_ncon/jp5.1.2/ota/AIM-Edge%20ncox_ncon%20Image%20Refresh%20over%20Ethernet%20Manual%20V1.1.pdf",
+    "https://www.inventecna.com/developer/nvidia/ncox-ncon/jp-5-1-2/usb",
+    "https://www.inventecna.com/developer/nvidia/ncox-ncon/jp-6-0/ota",
+    "https://www.inventecna.com/developer/nvidia/ncox-ncon/jp-6-0/usb",
+    "https://www.inventecna.com/developer/nvidia/ncox-ncon/jp-6-1/ota",
+    "https://www.inventecna.com/developer/nvidia/ncox-ncon/jp-6-1/usb",
+    "https://www.inventecna.com/developer/nvidia/ncox-ncon/jp-6-2/ota",
+    "https://www.inventecna.com/developer/nvidia/ncox-ncon/jp-6-2/usb",
+    "https://www.inventecna.com/developer/nvidia/psox-pson/jp-5-1-2/ota",
+    "https://www.inventecna.com/developer/nvidia/psox-pson/jp-5-1-2/usb",
+    "https://www.inventecna.com/developer/nvidia/psox-pson/jp-6-1/ota",
+    "https://www.inventecna.com/developer/nvidia/psox-pson/jp-6-1/usb",
+    "https://www.inventecna.com/developer/nvidia/psox-pson/jp-6-2/ota",
+    "https://www.inventecna.com/developer/nvidia/psox-pson/jp-6-2/usb",
+    "https://www.inventecna.com/developer/nvidia/ucon/jp-6-2/ota",
+    "https://www.inventecna.com/developer/nvidia/ucon/jp-6-2/usb"
+  ],
+  "items": [
+    {
+      "id": "Q1",
+      "category": "QC01W - Reflash",
+      "question": "What do I need before reflashing QC01W?",
+      "answer": "Connect QC01W to your host computer using a Type-C cable, and connect an Ethernet cable to QC01W."
+    },
+    {
+      "id": "Q2",
+      "category": "QC01W - Reflash",
+      "question": "How do I put QC01W into EDL mode?",
+      "answer": "You can enter EDL mode in two ways:\n- Option 1 (Command line): follow the command line instructions linked from the reflash page.\n- Option 2 (Hardware buttons):\n  1) Press and hold the Recovery button (Fn2) using a SIM card eject tool.\n  2) While holding the button, plug in the power cable.\n  3) Keep holding Fn2 for about 3 seconds, then release it.\n  4) The indicator light remains dark blue, indicating QC01W is in EDL mode."
+    },
+    {
+      "id": "Q3",
+      "category": "QC01W - Reflash",
+      "question": "How do I confirm QC01W is in EDL mode?",
+      "answer": "Check Device Manager on the host computer."
+    },
+    {
+      "id": "Q4",
+      "category": "QC01W - Reflash",
+      "question": "Where do I download QC01W image packages?",
+      "answer": "Download from the partner SFTP server to your host computer, then extract the package.\n- Host: 99.64.152.69\n- Port: 22\n- Username: qcs6490\n- Password: Become our partner to view password"
+    },
+    {
+      "id": "Q5",
+      "category": "QC01W - Reflash",
+      "question": "How do I start reflashing Ubuntu 20.04 (Minimal) on QC01W?",
+      "answer": "In the burn tool window, type \"fd\" and press Enter to start reflashing. When complete, the tool reboots the device automatically.\nImage package path:\n/Files/QC01W/QCUbuntu/image/v1.0.12.0/QFIL_flat.zip"
+    },
+    {
+      "id": "Q6",
+      "category": "QC01W - Reflash",
+      "question": "After flashing Ubuntu 20.04 (Minimal) base image, how do I install the desktop image?",
+      "answer": "Download the desktop image from SFTP and run the offline presetup script.\nDesktop image path:\n/Files/QC01W/QCUbuntu/ubuntu/1.0.7.x_20251001.zip"
+    },
+    {
+      "id": "Q7",
+      "category": "QC01W - Reflash",
+      "question": "What are the default login credentials for Ubuntu 20.04 (Minimal) desktop image?",
+      "answer": "Default desktop login:\n- Username: aim\n- Password: aim123\nAdmin in terminal:\n- Run: su\n- Password: oelinux123\nRoot password: oelinux123"
+    },
+    {
+      "id": "Q8",
+      "category": "QC01W - Reflash",
+      "question": "Can I run \"apt upgrade\" on QC01W Ubuntu 20.04 (Minimal)?",
+      "answer": "No. The documentation warns: do not run \"apt upgrade\" or it will break system dependencies."
+    },
+    {
+      "id": "Q9",
+      "category": "QC01W - Reflash",
+      "question": "How do I start reflashing Ubuntu 24.04 on QC01W?",
+      "answer": "In the burn tool window, type \"fd\" and press Enter. When complete, the tool reboots the device automatically.\nImage package path:\n/Files/QC01W/QCUbuntu/24.04/ubuntu-24.04_x04_QC01W_0242_POC.zip"
+    },
+    {
+      "id": "Q10",
+      "category": "QC01W - Reflash",
+      "question": "What are the default login credentials for Ubuntu 24.04 desktop?",
+      "answer": "Default desktop login:\n- Username: ubuntu\n- Password: ubuntu"
+    },
+    {
+      "id": "Q11",
+      "category": "QC01W - Reflash",
+      "question": "How do I start reflashing QCLinux on QC01W?",
+      "answer": "In the burn tool window, type \"fd\" and press Enter. When complete, the tool reboots the device automatically.\nImage package path:\n/Files/QC01W/QCLinux/v0.2.6.2/QFIL_flat.zip"
+    },
+    {
+      "id": "Q12",
+      "category": "QC01W - Reflash",
+      "question": "How do I start reflashing Android on QC01W?",
+      "answer": "In the burn tool window, type \"fd\" and press Enter. When complete, the tool reboots the device automatically.\nImage package path:\n/Files/QC01W/QCAndroid/la-32-v0108-ng.tar.gz"
+    },
+    {
+      "id": "Q13",
+      "category": "QC01W - Reflash",
+      "question": "How do I start reflashing Windows (IoT) on QC01W?",
+      "answer": "In the burn tool window, enter option \"1\" and press Enter. When complete, the tool reboots the device automatically.\nImage package path:\n/Files/QC01W/QCWin/WOA_POC-1.0/WOA_POC-1.0.7z"
+    },
+    {
+      "id": "Q14",
+      "category": "QC01W - Reflash",
+      "question": "Who do I contact if I can’t access the SFTP password or I get stuck?",
+      "answer": "Use the \"Contact us\" link on the developer pages:\nhttps://www.inventecna.com/developer"
+    },
+    {
+      "id": "Q15",
+      "category": "NCOX / NCON - JP 5.1.2 OTA",
+      "question": "How do I reflash NCOX/NCON JetPack 5.1.2 using OTA over Ethernet?",
+      "answer": "Download the OTA package from the SFTP server, then follow the \"Image Refresh over Ethernet\" manual (PDF)."
+    },
+    {
+      "id": "Q16",
+      "category": "NCOX / NCON - JP 5.1.2 OTA",
+      "question": "Where do I download the NCOX/NCON JP5.1.2 OTA package?",
+      "answer": "From the partner SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nOTA package path:\n/Files/ncox_ncon/JP5.1.2/O1_dev_5.1.2_V07_OTA"
+    },
+    {
+      "id": "Q17",
+      "category": "NCOX / NCON - JP 5.1.2 OTA",
+      "question": "Where is the step-by-step OTA procedure documented?",
+      "answer": "Download the manual (PDF):\nhttps://www.inventecna.com/image_reflash/ncox_ncon/jp5.1.2/ota/AIM-Edge%20ncox_ncon%20Image%20Refresh%20over%20Ethernet%20Manual%20V1.1.pdf"
+    },
+    {
+      "id": "Q18",
+      "category": "QC01W - EDL (Command line)",
+      "question": "What is command-line EDL entry used for on QC01W?",
+      "answer": "It is a reference for entering EDL (Emergency Download) mode using ADB/command line on supported operating systems, depending on what OS is running on the device before reflashing."
+    },
+    {
+      "id": "Q19",
+      "category": "QC01W - EDL (Command line)",
+      "question": "What do I need before using ADB commands to enter EDL mode?",
+      "answer": "ADB must be installed on your host computer. Follow the “Install ADB on the host computer” instructions if it is not installed."
+    },
+    {
+      "id": "Q20",
+      "category": "QC01W - EDL (Command line)",
+      "question": "How do I enter EDL mode from the command line when QC01W is running QCLinux?",
+      "answer": "From the host PC terminal, run:\nadb shell reboot edl\nAlso connect QC01W to the host PC over USB cable."
+    },
+    {
+      "id": "Q21",
+      "category": "QC01W - EDL (Command line)",
+      "question": "How do I enter EDL mode from the command line when QC01W is running Ubuntu 20.04 (Minimal)?",
+      "answer": "From the host PC terminal:\n1) adb root\n2) adb reboot edl\nAlso connect QC01W to the host PC over USB cable."
+    },
+    {
+      "id": "Q22",
+      "category": "QC01W - EDL (Command line)",
+      "question": "How do I enter EDL mode from the command line when QC01W is running Android?",
+      "answer": "From the host PC terminal:\n1) adb root\n2) adb reboot edl\nAlso connect QC01W to the host PC over USB cable."
+    },
+    {
+      "id": "Q23",
+      "category": "QC01W - EDL (Command line)",
+      "question": "Is command-line EDL entry supported on QC01W Ubuntu 24.04?",
+      "answer": "No. Command-line EDL entry is not supported on Ubuntu 24.04. Use the hardware button method described on the image reflashing SOP page."
+    },
+    {
+      "id": "Q24",
+      "category": "QC01W - EDL (Command line)",
+      "question": "Is command-line EDL entry supported on QC01W Windows (IoT)?",
+      "answer": "No. Command-line EDL entry is not supported on Windows (IoT). Use the hardware button method described on the image reflashing SOP page."
+    },
+    {
+      "id": "Q25",
+      "category": "NCOX / NCON - JP 5.1.2 OTA",
+      "question": "What host computer is required to refresh NCOX/NCON JetPack 5.1.2 image over Ethernet?",
+      "answer": "A Linux Host PC/Notebook with Ubuntu Linux x64 20.04 or 18.04, and it must be able to connect to the device through LAN."
+    },
+    {
+      "id": "Q26",
+      "category": "NCOX / NCON - JP 5.1.2 OTA",
+      "question": "What files are included in the JP 5.1.2 OTA refresh package folder?",
+      "answer": "The package folder includes the OTA image file (ota_payload_package.tar.gz), the OTA tool (ota_tools_V3.tar.bz2), and the script (ota.sh). Download all three to the host PC/notebook."
+    },
+    {
+      "id": "Q27",
+      "category": "NCOX / NCON - JP 5.1.2 OTA",
+      "question": "How do I start the OTA update for NCOX/NCON from the host PC?",
+      "answer": "Run the OTA script from the host PC, for example:\n./ota.sh -i 192.168.55.1 -p ota_payload_package.tar.gz -t ota_tools_V3.tar.bz2 --port 22\nParameters:\n- -i: target device IP\n- -p: OTA package filename\n- -t: OTA tool filename\n- --port: target device SSH port (default 22)"
+    },
+    {
+      "id": "Q28",
+      "category": "NCOX / NCON - JP 5.1.2 OTA",
+      "question": "How long does the NCOX/NCON OTA image refresh take, and what happens during the process?",
+      "answer": "The update typically takes around 15–20 minutes. The host uploads the OTA tool and image, the target decompresses the files, checks package integrity, then starts updating automatically. The host monitors status and completes when the device reconnects to the network."
+    },
+    {
+      "id": "Q29",
+      "category": "NCOX / NCON - JP 5.1.2 OTA",
+      "question": "What happens if the OTA process takes longer than 30 minutes?",
+      "answer": "If the host waits longer than 30 minutes, it aborts the OTA script and shows a warning message: \"OTA status: Timeout please check device power\"."
+    },
+    {
+      "id": "Q30",
+      "category": "NCOX / NCON - JP 5.1.2 OTA",
+      "question": "How do I find the NCOX/NCON IP address for OTA/SSH?",
+      "answer": "By default, the device’s Gigabit Ethernet port uses DHCP and will obtain an IP from the LAN router/access point after power on. Check your router/AP web interface for a device named like \"AIM-dev-xxxx\" to see its assigned IP."
+    },
+    {
+      "id": "Q31",
+      "category": "NCOX / NCON - JP 5.1.2 OTA",
+      "question": "What are the default SSH credentials for NCOX/NCON, and is there any first-login requirement?",
+      "answer": "Default SSH credentials are Username: aim / Password: aim12345. For security, you will be asked to change the password on the first login."
+    },
+    {
+      "id": "Q32",
+      "category": "QC01W - ADB",
+      "question": "How do I install ADB on a Windows host PC for QC01W command-line EDL entry?",
+      "answer": "Download Android Platform Tools (platform-tools zip), extract it (for example to C:\\platform-tools), then add that folder to your system PATH or open Command Prompt in that folder to run adb. Verify with: adb version."
+    },
+    {
+      "id": "Q33",
+      "category": "QC01W - ADB",
+      "question": "How do I install ADB on Linux (Ubuntu/Debian) for QC01W command-line EDL entry?",
+      "answer": "Run: sudo apt update && sudo apt install -y adb\nVerify with: adb version."
+    },
+    {
+      "id": "Q34",
+      "category": "QC01W - ADB",
+      "question": "How do I install ADB on macOS for QC01W command-line EDL entry?",
+      "answer": "With Homebrew: brew install android-platform-tools\nOr download Platform Tools and add the extracted folder to PATH.\nVerify with: adb version."
+    },
+    {
+      "id": "Q35",
+      "category": "NCOX / NCON - JP 5.1.2 USB",
+      "question": "Where do I download the NCOX/NCON JetPack 5.1.2 USB reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/ncox_ncon/JP5.1.2/O1_dev_5.1.2_V07_USB"
+    },
+    {
+      "id": "Q36",
+      "category": "NCOX / NCON - JP 5.1.2 USB",
+      "question": "Where is the step-by-step manual for NCOX/NCON JetPack 5.1.2 USB reflash?",
+      "answer": "Download the PDF manual:\nhttps://www.inventecna.com/image_reflash/ncox_ncon/jp5.1.2/usb/AIM-Edge%20ncox_ncon%20Developer%20Image%20Refresh%20Manual%20V1.5.pdf"
+    },
+    {
+      "id": "Q37",
+      "category": "NCOX / NCON - JP 6.0 OTA",
+      "question": "Where do I download the NCOX/NCON JetPack 6.0 OTA reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/ncox_ncon/JP6.0/O1_dev_6.0_V03_OTA"
+    },
+    {
+      "id": "Q38",
+      "category": "NCOX / NCON - JP 6.0 OTA",
+      "question": "Where is the step-by-step manual for NCOX/NCON JetPack 6.0 OTA (over Ethernet) reflash?",
+      "answer": "Download the PDF manual:\nhttps://www.inventecna.com/image_reflash/ncox_ncon/jp6.0/ota/AIM-Edge%20ncox_ncon%20Image%20Refresh%20over%20Ethernet%20Manual%20V2.0.pdf"
+    },
+    {
+      "id": "Q39",
+      "category": "NCOX / NCON - JP 6.0 USB",
+      "question": "Where do I download the NCOX/NCON JetPack 6.0 USB reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/ncox_ncon/JP6.0/O1_dev_6.0_V03_USB"
+    },
+    {
+      "id": "Q40",
+      "category": "NCOX / NCON - JP 6.0 USB",
+      "question": "Where is the step-by-step manual for NCOX/NCON JetPack 6.0 USB reflash?",
+      "answer": "Download the PDF manual:\nhttps://www.inventecna.com/image_reflash/ncox_ncon/jp6.0/usb/AIM-Edge%20ncox_ncon%20Developer%20Image%20Refresh%20Manual%20V2.0.pdf"
+    },
+    {
+      "id": "Q41",
+      "category": "NCOX / NCON - JP 6.1 OTA",
+      "question": "Where do I download the NCOX/NCON JetPack 6.1 OTA reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/ncox_ncon/JP6.1/O1_dev_6.1_V01_OTA"
+    },
+    {
+      "id": "Q42",
+      "category": "NCOX / NCON - JP 6.1 OTA",
+      "question": "Where is the step-by-step manual for NCOX/NCON JetPack 6.1 OTA (over Ethernet) reflash?",
+      "answer": "Download the PDF manual:\nhttps://www.inventecna.com/image_reflash/ncox_ncon/jp6.1/ota/AIM-Edge%20ncox_ncon%20Image%20Refresh%20over%20Ethernet%20Manual%20V2.1.pdf"
+    },
+    {
+      "id": "Q43",
+      "category": "NCOX / NCON - JP 6.1 USB",
+      "question": "Where do I download the NCOX/NCON JetPack 6.1 USB reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/ncox_ncon/JP6.1/O1_dev_6.1_V01_USB"
+    },
+    {
+      "id": "Q44",
+      "category": "NCOX / NCON - JP 6.1 USB",
+      "question": "Where is the step-by-step manual for NCOX/NCON JetPack 6.1 USB reflash?",
+      "answer": "Download the PDF manual:\nhttps://www.inventecna.com/image_reflash/ncox_ncon/jp6.1/usb/AIM-Edge%20ncox_ncon%20Developer%20Image%20Refresh%20Manual%20V2.1.pdf"
+    },
+    {
+      "id": "Q45",
+      "category": "NCOX / NCON - JP 6.2 OTA",
+      "question": "Where do I download the NCOX/NCON JetPack 6.2 OTA reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/ncox_ncon/JP6.2/O1_dev_6.2_V01_OTA"
+    },
+    {
+      "id": "Q46",
+      "category": "NCOX / NCON - JP 6.2 OTA",
+      "question": "Where is the step-by-step manual for NCOX/NCON JetPack 6.2 OTA (over Ethernet) reflash?",
+      "answer": "Download the PDF manual:\nhttps://www.inventecna.com/image_reflash/ncox_ncon/jp6.2/ota/AIM-Edge%20ncox_ncon%20Image%20Refresh%20over%20Ethernet%20Manual%20V2.2.pdf"
+    },
+    {
+      "id": "Q47",
+      "category": "NCOX / NCON - JP 6.2 USB",
+      "question": "Where do I download the NCOX/NCON JetPack 6.2 USB reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/ncox_ncon/JP6.2/O1_dev_6.2_V01_USB"
+    },
+    {
+      "id": "Q48",
+      "category": "NCOX / NCON - JP 6.2 USB",
+      "question": "Where is the step-by-step manual for NCOX/NCON JetPack 6.2 USB reflash?",
+      "answer": "Download the PDF manual:\nhttps://www.inventecna.com/image_reflash/ncox_ncon/jp6.2/usb/AIM-Edge%20ncox_ncon%20Developer%20Image%20Refresh%20Manual%20V2.2.pdf"
+    },
+    {
+      "id": "Q49",
+      "category": "PSOX / PSON - JP 5.1.2 OTA",
+      "question": "Where do I download the PSOX/PSON JetPack 5.1.2 OTA reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/psox_pson/JP5.1.2/O2_dev_5.1.2_V06_OTA"
+    },
+    {
+      "id": "Q50",
+      "category": "PSOX / PSON - JP 5.1.2 OTA",
+      "question": "Where is the step-by-step manual for PSOX/PSON JetPack 5.1.2 OTA (over Ethernet) reflash?",
+      "answer": "Download the PDF manual:\nhttps://www.inventecna.com/image_reflash/psox_pson/jp5.1.2/ota/AIM-Edge%20psox_pson%20Image%20Refresh%20over%20Ethernet%20Manual%20V1.1.pdf"
+    },
+    {
+      "id": "Q51",
+      "category": "PSOX / PSON - JP 5.1.2 USB",
+      "question": "Where do I download the PSOX/PSON JetPack 5.1.2 USB reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/psox_pson/JP5.1.2/O2_dev_5.1.2_V06_USB"
+    },
+    {
+      "id": "Q52",
+      "category": "PSOX / PSON - JP 5.1.2 USB",
+      "question": "Where is the step-by-step manual for PSOX/PSON JetPack 5.1.2 USB reflash?",
+      "answer": "Download the PDF manual:\nhttps://www.inventecna.com/image_reflash/psox_pson/jp5.1.2/usb/AIM-Edge%20psox_pson%20Developer%20Image%20Refresh%20Manual%20V1.5.pdf"
+    },
+    {
+      "id": "Q53",
+      "category": "PSOX / PSON - JP 6.1 OTA",
+      "question": "Where do I download the PSOX/PSON JetPack 6.1 OTA reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/psox_pson/JP6.1/O2_dev_6.1_V02_OTA"
+    },
+    {
+      "id": "Q54",
+      "category": "PSOX / PSON - JP 6.1 OTA",
+      "question": "Where is the step-by-step manual for PSOX/PSON JetPack 6.1 OTA (over Ethernet) reflash?",
+      "answer": "Download the PDF manual:\nhttps://www.inventecna.com/image_reflash/psox_pson/jp6.1/ota/AIM-Edge%20psox_pson%20Image%20Refresh%20over%20Ethernet%20Manual%20V2.0.pdf"
+    },
+    {
+      "id": "Q55",
+      "category": "PSOX / PSON - JP 6.1 USB",
+      "question": "Where do I download the PSOX/PSON JetPack 6.1 USB reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/psox_pson/JP6.1/O2_dev_6.1_V02_USB"
+    },
+    {
+      "id": "Q56",
+      "category": "PSOX / PSON - JP 6.1 USB",
+      "question": "Where is the step-by-step manual for PSOX/PSON JetPack 6.1 USB reflash?",
+      "answer": "Download the PDF manual:\nhttps://www.inventecna.com/image_reflash/psox_pson/jp6.1/usb/AIM-Edge%20psox_pson%20Developer%20Image%20Refresh%20Manual%20V2.0.pdf"
+    },
+    {
+      "id": "Q57",
+      "category": "PSOX / PSON - JP 6.2 OTA",
+      "question": "Where do I download the PSOX/PSON JetPack 6.2 OTA reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/psox_pson/JP6.2/O2_dev_6.2_V03_OTA"
+    },
+    {
+      "id": "Q58",
+      "category": "PSOX / PSON - JP 6.2 OTA",
+      "question": "Where is the step-by-step manual for PSOX/PSON JetPack 6.2 OTA (over Ethernet) reflash?",
+      "answer": "Download the PDF manual:\nhttps://www.inventecna.com/image_reflash/psox_pson/jp6.2/ota/AIM-Edge%20psox_pson%20Image%20Refresh%20over%20Ethernet%20Manual%20V2.0.pdf"
+    },
+    {
+      "id": "Q59",
+      "category": "PSOX / PSON - JP 6.2 USB",
+      "question": "Where do I download the PSOX/PSON JetPack 6.2 USB reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/psox_pson/JP6.2/O2_dev_6.2_V03_USB"
+    },
+    {
+      "id": "Q60",
+      "category": "PSOX / PSON - JP 6.2 USB",
+      "question": "Where is the step-by-step manual for PSOX/PSON JetPack 6.2 USB reflash?",
+      "answer": "Download the PDF manual:\nhttps://www.inventecna.com/image_reflash/psox_pson/jp6.2/usb/AIM-Edge%20psox_pson%20Developer%20Image%20Refresh%20Manual%20V2.0.pdf"
+    },
+    {
+      "id": "Q61",
+      "category": "UCON - JP 6.2 OTA",
+      "question": "Where do I download the UCON JetPack 6.2 OTA reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/ucon/JP6.2/UC_dev_6.2_V03_OTA"
+    },
+    {
+      "id": "Q62",
+      "category": "UCON - JP 6.2 OTA",
+      "question": "Where is the step-by-step manual for UCON JetPack 6.2 OTA (over Ethernet) reflash?",
+      "answer": "Download the PDF manual (as linked on the UCON OTA page):\nhttps://www.inventecna.com/image_reflash/ucon/jp6.2/ota/AIM-Edge%20psox_pson%20Image%20Refresh%20over%20Ethernet%20Manual%20V2.0.pdf"
+    },
+    {
+      "id": "Q63",
+      "category": "UCON - JP 6.2 USB",
+      "question": "Where do I download the UCON JetPack 6.2 USB reflash package?",
+      "answer": "Download from the SFTP server:\n- Host: 99.64.152.69\n- Port: 22\n- Username: orin\n- Password: Become our partner to view password\nPackage path:\n/Files/ucon/JP6.2/UC_dev_6.2_V03_USB"
+    },
+    {
+      "id": "Q64",
+      "category": "UCON - JP 6.2 USB",
+      "question": "Where is the step-by-step manual for UCON JetPack 6.2 USB reflash?",
+      "answer": "Download the PDF manual (as linked on the UCON USB page):\nhttps://www.inventecna.com/image_reflash/ucon/jp6.2/usb/AIM-Edge%20psox_pson%20Developer%20Image%20Refresh%20Manual%20V2.0.pdf"
+    },
+    {
+      "id": "Q65",
+      "category": "NCOX / NCON - JetPack versions",
+      "question": "What is the latest JetPack version available for NCOX/NCON in the Inventec NA developer documentation set?",
+      "answer": "JetPack 6.2 is the latest JetPack version listed for NCOX/NCON in this documentation set."
+    },
+    {
+      "id": "Q66",
+      "category": "NCOX / NCON - JetPack versions",
+      "question": "Which JetPack versions are listed for NCOX/NCON in this documentation set?",
+      "answer": "The listed JetPack versions for NCOX/NCON are 5.1.2, 6.0, 6.1, and 6.2."
+    },
+    {
+      "id": "Q67",
+      "category": "PSOX / PSON - JetPack versions",
+      "question": "What is the latest JetPack version available for PSOX/PSON in the Inventec NA developer documentation set?",
+      "answer": "JetPack 6.2 is the latest JetPack version listed for PSOX/PSON in this documentation set."
+    },
+    {
+      "id": "Q68",
+      "category": "PSOX / PSON - JetPack versions",
+      "question": "Which JetPack versions are listed for PSOX/PSON in this documentation set?",
+      "answer": "The listed JetPack versions for PSOX/PSON are 5.1.2, 6.1, and 6.2."
+    },
+    {
+      "id": "Q69",
+      "category": "UCON - JetPack versions",
+      "question": "What is the latest JetPack version available for UCON in the Inventec NA developer documentation set?",
+      "answer": "JetPack 6.2 is the latest JetPack version listed for UCON in this documentation set."
+    },
+    {
+      "id": "Q70",
+      "category": "UCON - JetPack versions",
+      "question": "Which JetPack versions are listed for UCON in this documentation set?",
+      "answer": "The listed JetPack version for UCON in this documentation set is 6.2."
+    }
+  ]
+}
+
