@@ -6,4 +6,8 @@
 
 .main-content {
   flex: 1;
+  /* Allow shrinking so wide intrinsic content (e.g. hero/product imgs) cannot force page overflow */
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
 }

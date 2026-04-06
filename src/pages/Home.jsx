@@ -112,9 +112,8 @@ const Home = () => {
                 src={src}
                 alt=""
                 className="hero-slide-img"
-                width={1920}
-                height={700}
                 loading={i === 0 ? 'eager' : 'lazy'}
+                decoding="async"
               />
             </div>
           ))}

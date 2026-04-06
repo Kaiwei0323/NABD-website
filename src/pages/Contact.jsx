@@ -18,8 +18,7 @@ const Contact = () => {
             src="/image/nabd-contact/banner.jpg"
             alt=""
             className="contact-hero-img"
-            width={1920}
-            height={700}
+            decoding="async"
           />
           <div className="contact-hero-scrim" aria-hidden="true" />
         </div>

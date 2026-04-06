@@ -11,8 +11,7 @@ const Resource = () => {
             src="/image/nabd-resource/banner.jpg"
             alt=""
             className="resource-hero-img"
-            width={1920}
-            height={700}
+            decoding="async"
           />
           <div className="resource-hero-scrim" aria-hidden="true" />
         </div>
