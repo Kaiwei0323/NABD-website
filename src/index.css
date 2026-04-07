@@ -4,6 +4,18 @@
   box-sizing: border-box;
 }
 
+:root {
+  /* Used by the Developer floating chat panel to avoid overlapping the sticky header. */
+  --site-header-height: 84px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    /* Header becomes two rows on mobile. */
+    --site-header-height: 156px;
+  }
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',

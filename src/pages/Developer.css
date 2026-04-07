@@ -609,7 +609,11 @@
   display: flex;
   flex-direction: column;
   width: min(26rem, calc(100vw - 2.5rem));
-  max-height: min(88vh, 720px);
+  /* Keep a consistent panel height on desktop so chat never pushes it into the header. */
+  height: 520px;
+  /* Also clamp to viewport so it fits smaller screens. */
+  max-height: min(calc(100vh - var(--site-header-height, 84px) - 2rem), 720px);
+  max-height: min(calc(100dvh - var(--site-header-height, 84px) - 2rem), 720px);
   padding: 1.15rem 1.25rem 1.25rem;
   border-radius: 18px;
   background: linear-gradient(165deg, #ffffff 0%, #f8fafc 100%);
@@ -898,50 +902,36 @@
   .dev-contact-fab-panel {
     width: min(100%, calc(100vw - 2rem));
     padding: 1rem 1.1rem 1.1rem;
+    height: auto;
   }
 }
 
 @media (max-width: 480px) {
+  /* On phones, constrain the open panel by top+bottom so it never overlaps the header. */
   .dev-contact-fab {
-    right: 0.85rem;
     left: 0.85rem;
+    right: 0.85rem;
     bottom: calc(0.85rem + env(safe-area-inset-bottom));
     align-items: stretch;
     max-width: none;
   }
 
   .dev-contact-fab-panel {
-    width: 100%;
-    max-height: min(88dvh, 720px);
+    position: fixed;
+    left: 0.85rem;
+    right: 0.85rem;
+    bottom: calc(0.85rem + env(safe-area-inset-bottom));
+    /* Reserve space for the sticky header (set in Header.css) + a little breathing room. */
+    top: calc(0.85rem + env(safe-area-inset-top) + var(--site-header-height, 140px) + 18px);
+    width: auto;
+    max-height: none;
     padding: 0.95rem 0.95rem 1rem;
     border-radius: 16px;
-  }
-
-  .dev-contact-fab-panel-title {
-    font-size: 1.05rem;
-  }
-
-  .dev-contact-fab-panel-desc {
-    font-size: 0.82rem;
-  }
-
-  .dev-contact-fab-chat-block {
-    margin: 0.15rem 0 0.75rem;
-  }
-
-  .dev-rag-messages--fab {
-    max-height: min(34dvh, 260px);
   }
 
   .dev-rag-form--fab {
     flex-direction: column;
     align-items: stretch;
-  }
-
-  .dev-rag-input--fab {
-    width: 100%;
-    min-height: 44px;
-    max-height: 120px;
   }
 
   .dev-rag-send--fab {
