@@ -155,6 +155,17 @@ export function DeveloperRagChatPanel({ inputId = 'dev-rag-input', className = '
           placeholder="Ask about reflashing, EDL, JetPack…"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDownCapture={(e) => {
+            // Enter sends. Shift+Enter inserts a newline.
+            // Use capture so we intercept before the textarea inserts a newline.
+            if (e.nativeEvent?.isComposing) return
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault()
+              e.stopPropagation()
+              // Trigger the same handler as the Send button
+              send(e)
+            }
+          }}
           disabled={loading}
           maxLength={4000}
         />
