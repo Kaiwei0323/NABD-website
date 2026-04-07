@@ -10,9 +10,13 @@ services:
     volumes:
       # Use host's server/database so existing users.json is used (same as when running server locally)
       - ./server/database:/app/server/database
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       - HOST=0.0.0.0
       - PORT=3001
+      # RAG on host (e.g. npm run rag:dev): host.docker.internal. Same compose network: http://rag:8765
+      - RAG_SERVICE_URL=${RAG_SERVICE_URL:-http://host.docker.internal:8765}
 
   # Frontend (Vite dev server) - http://99.64.152.69:3000
   web:
@@ -22,8 +26,51 @@ services:
     restart: unless-stopped
     ports:
       - "3000:3000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      # Vite proxy /developer-rag → RAG (published 8765 on host or rag container)
+      - RAG_PROXY_TARGET=http://host.docker.internal:8765
     volumes:
       - .:/app
       - /app/node_modules
     depends_on:
       - server
+
+  # Developer RAG API (GPU) — port 8765. NVIDIA Container Toolkit required on the host.
+  rag:
+    profiles: ["rag"]
+    build:
+      context: ./python-rag-service
+      dockerfile: Dockerfile.gpu
+    restart: unless-stopped
+    ports:
+      - "8765:8765"
+    env_file:
+      - ./python-rag-service/.env
+    volumes:
+      - rag_hf_cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  # CPU-only RAG (no GPU). Use profile rag-cpu — do not run with rag at the same time (same port).
+  rag-cpu:
+    profiles: ["rag-cpu"]
+    build:
+      context: ./python-rag-service
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8765:8765"
+    env_file:
+      - ./python-rag-service/.env
+    volumes:
+      - rag_hf_cache:/root/.cache/huggingface
+
+volumes:
+  rag_hf_cache:

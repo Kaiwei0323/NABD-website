@@ -15,20 +15,36 @@ const HOST = process.env.HOST || '0.0.0.0'
 const DB_PATH = path.join(__dirname, 'database', 'users.json')
 
 // Middleware
-// CORS configuration - allow frontend origins (static IP, localhost, inventecna domain)
+// CORS: listed hosts + localhost/127.0.0.1 with any port + private LAN IPs (Docker / dev)
+function isAllowedCorsOrigin(origin) {
+  if (!origin) return true
+  const allowed = [
+    'http://99.64.152.69:3000',
+    'http://99.64.152.69',
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:3001',
+    'http://127.0.0.1'
+  ]
+  if (allowed.includes(origin)) return true
+  if (/^https?:\/\/(www\.)?inventecna(\.com)?(:\d+)?$/i.test(origin)) return true
+  if (origin.includes('inventecna')) return true
+  if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) return true
+  if (
+    /^https?:\/\/(10\.\d{1,3}\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3})(:\d+)?$/i.test(
+      origin
+    )
+  ) {
+    return true
+  }
+  return false
+}
+
 const corsOptions = {
   origin: (origin, callback) => {
-    const allowed = [
-      'http://99.64.152.69:3000',
-      'http://99.64.152.69',
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'http://localhost'
-    ]
-    const allowedHost = !origin || allowed.includes(origin) ||
-      /^https?:\/\/(www\.)?inventecna(\.com)?(:\d+)?$/i.test(origin) ||
-      (origin && origin.includes('inventecna'))
-    callback(null, allowedHost)
+    callback(null, isAllowedCorsOrigin(origin))
   },
   credentials: true
 }
@@ -59,6 +75,33 @@ const readUsers = () => {
 // Helper function to write users to database
 const writeUsers = (users) => {
   fs.writeFileSync(DB_PATH, JSON.stringify(users, null, 2))
+}
+
+const DEFAULT_ADMIN_USERNAME = process.env.DEFAULT_ADMIN_USERNAME || 'admin@inventec.com'
+const DEFAULT_ADMIN_PASSWORD = process.env.DEFAULT_ADMIN_PASSWORD || 'admin123'
+
+async function seedDefaultAdminIfEmpty() {
+  if (process.env.SKIP_DEFAULT_ADMIN_SEED === 'true') return
+  try {
+    const users = readUsers()
+    if (!Array.isArray(users) || users.length > 0) return
+    const passwordHash = await bcrypt.hash(DEFAULT_ADMIN_PASSWORD, 10)
+    writeUsers([
+      {
+        id: '1',
+        username: DEFAULT_ADMIN_USERNAME,
+        passwordHash,
+        role: 'admin',
+        createdAt: new Date().toISOString()
+      }
+    ])
+    console.log(
+      `[users] Empty database: created default admin "${DEFAULT_ADMIN_USERNAME}". ` +
+        'Set SKIP_DEFAULT_ADMIN_SEED=true or DEFAULT_ADMIN_PASSWORD in production.'
+    )
+  } catch (e) {
+    console.error('[users] Default admin seed failed:', e)
+  }
 }
 
 // NVIDIA developer secret endpoints (admin only, requires password re-check)
@@ -427,8 +470,13 @@ app.use((req, res, next) => {
   return res.sendFile(indexHtml)
 })
 
-app.listen(PORT, HOST, () => {
-  console.log(`Server is running on http://${HOST}:${PORT}`)
-  console.log(`Accessible from: http://99.64.152.69:${PORT}`)
-  console.log(`Database location: ${DB_PATH}`)
-})
+async function start() {
+  await seedDefaultAdminIfEmpty()
+  app.listen(PORT, HOST, () => {
+    console.log(`Server is running on http://${HOST}:${PORT}`)
+    console.log(`Accessible from: http://99.64.152.69:${PORT}`)
+    console.log(`Database location: ${DB_PATH}`)
+  })
+}
+
+start()

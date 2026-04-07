@@ -35,6 +35,8 @@ npm run dev
 
 Leave this running. You should see: `Server is running on http://0.0.0.0:3001`.
 
+**First-time login (empty user database):** On startup, if `server/database/users.json` has **no users**, the server seeds a default **admin** account: username **`admin@inventec.com`**, password **`admin123`**. Change this in production via **`DEFAULT_ADMIN_USERNAME`**, **`DEFAULT_ADMIN_PASSWORD`**, or disable seeding with **`SKIP_DEFAULT_ADMIN_SEED=true`**. After a restart with an **empty** `[]` database, the seed runs once; if you already have users, nothing is added.
+
 **Terminal 2 – Frontend (website on port 3000):**
 
 ```bash
@@ -118,6 +120,8 @@ If the site is served at **https://yourdomain.com** and nginx proxies **/api** t
 | After frontend code change  | `npm run build` (and redeploy `dist/` if needed) |
 | After backend code change   | `docker compose up -d --build server` |
 | Local: RAG chat assistant   | `conda activate nemotron-rag`, then `npm run rag:dev` (see §6) |
+| Docker: RAG service (GPU)   | `docker compose --profile rag up -d --build rag` (see §6.5) |
+| Docker: RAG service (CPU)   | `docker compose --profile rag-cpu up -d --build rag-cpu` (see §6.5) |
 
 ---
 
@@ -128,7 +132,7 @@ NABD-website/
 ├── public/           # Static assets, product images/PDFs
 ├── src/              # React app (pages, components, context, utils)
 ├── server/           # Node API (Express), database in server/database/users.json
-├── python-rag-service/  # FastAPI RAG API (optional; see README §6)
+├── python-rag-service/  # FastAPI RAG API, Dockerfile / Dockerfile.gpu (optional; see README §6)
 ├── dist/             # Built frontend (after npm run build) – do not commit
 ├── ssl/              # SSL cert/key for HTTPS (do not commit; in .gitignore)
 ├── docker-compose.yml
@@ -205,6 +209,74 @@ python -m uvicorn main:app --host 0.0.0.0 --port 8765 --reload
 ```
 
 For local Vite dev, **/developer-rag** is proxied to this service. If you use **Express on port 3001** with the built site, **/developer-rag** is proxied there as well (see **server** config). Set **RAG_SERVICE_URL** if the RAG service runs on another host/port.
+
+### 6.5 Run the RAG service with Docker
+
+This matches the same stack as a local install (PyTorch + **requirements.txt** + uvicorn on **8765**), without conda on the host.
+
+**Prerequisites**
+
+1. [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/) v2+.
+2. A **python-rag-service/.env** file with **NVIDIA_API_KEY** (copy from **python-rag-service/.env.example**). Compose loads this file for the RAG containers.
+3. **Profile `rag` (GPU):** [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) on the host so Docker can use your GPU.
+
+**GPU (default `rag` service — CUDA 12.1 in the image)**
+
+From the **project root**:
+
+```bash
+docker compose --profile rag up -d --build rag
+```
+
+Full stack (website + API + RAG on GPU):
+
+```bash
+docker compose --profile rag up -d --build server web rag
+```
+
+Set **`RAG_SERVICE_URL=http://rag:8765`** in the **project root** `.env` when **server** and **rag** run together in Compose.
+
+**CPU only (no GPU)**
+
+Use the **`rag-cpu`** service. Do **not** run **`rag`** and **`rag-cpu`** at once (both use port **8765**).
+
+```bash
+docker compose --profile rag-cpu up -d --build rag-cpu
+```
+
+**Check health**
+
+```bash
+curl -s http://localhost:8765/api/health
+```
+
+`rag_ready` should be `true` after models finish loading (first start can take several minutes while weights download).
+
+**Build only the image (optional)**
+
+```bash
+docker build -t inventec-rag:cpu -f python-rag-service/Dockerfile python-rag-service
+docker build -t inventec-rag:gpu -f python-rag-service/Dockerfile.gpu python-rag-service
+docker run --rm -p 8765:8765 --env-file python-rag-service/.env inventec-rag:cpu
+```
+
+For **GPU** with plain `docker run`, pass GPU flags, for example:
+
+```bash
+docker run --rm -p 8765:8765 --env-file python-rag-service/.env --gpus all inventec-rag:gpu
+```
+
+**Node server + Docker RAG**
+
+- **Server in Docker, RAG on the host** (e.g. `npm run rag:dev` on port 8765): the Compose **server** service defaults to **RAG_SERVICE_URL=http://host.docker.internal:8765** (with `extra_hosts: host-gateway` for Linux). No change needed on Docker Desktop for Windows/macOS in most cases.
+- **Server and RAG both in Docker:** set **`RAG_SERVICE_URL=http://rag:8765`** in the **project root** `.env`, then use the full-stack command above (`server web rag`).
+
+Hugging Face model weights are cached in the **rag_hf_cache** Docker volume so restarts are faster.
+
+**If login or the chat fails in Docker**
+
+- **Chat “something went wrong”:** The Vite app in the **web** container must proxy `/developer-rag` to a reachable RAG service. Compose sets **`RAG_PROXY_TARGET=http://host.docker.internal:8765`** so traffic goes to port **8765** on the host (where the **rag** container publishes it). Restart the **web** container after changing Compose. Ensure the **rag** (or **rag-cpu**) service is running and healthy (`curl http://localhost:8765/api/health`).
+- **Login / API errors:** The browser calls **`http://<same-host>:3001/api`**. Open port **3001** on the host firewall. If you use **`127.0.0.1`** or a **LAN IP** (e.g. `192.168.x.x`) to open the site, CORS is allowed for those dev origins. For a custom domain, add it to **`server/index.js`** `isAllowedCorsOrigin` or set **`VITE_API_URL`** before build.
 
 ---
 

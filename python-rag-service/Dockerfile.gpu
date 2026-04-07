@@ -1,0 +1,16 @@
+# GPU image: PyTorch + CUDA 12.1 runtime (needs NVIDIA Container Toolkit on the host)
+# https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html
+FROM pytorch/pytorch:2.4.1-cuda12.1-cudnn9-runtime
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    sed '/^torch/d' requirements.txt > /tmp/req-notorch.txt && \
+    pip install --no-cache-dir -r /tmp/req-notorch.txt
+
+COPY . .
+
+EXPOSE 8765
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8765"]

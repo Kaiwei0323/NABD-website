@@ -1,15 +1,19 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// Inside Docker, 127.0.0.1 is the web container itself — use host gateway + published RAG port.
+// docker-compose sets RAG_PROXY_TARGET=http://host.docker.internal:8765 for the web service.
+const ragProxyTarget =
+  process.env.RAG_PROXY_TARGET || process.env.VITE_RAG_PROXY_TARGET || 'http://127.0.0.1:8765'
+
 export default defineConfig({
   plugins: [react()],
   server: {
     host: true, // allow external access
     port: 3000,
     proxy: {
-      // Dev: forward to python-rag-service (npm run rag:dev on port 8765)
       '/developer-rag': {
-        target: 'http://127.0.0.1:8765',
+        target: ragProxyTarget,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/developer-rag/, '')
       }
