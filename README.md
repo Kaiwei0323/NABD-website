@@ -94,11 +94,11 @@ Goal: convert your raw files into a **FAISS vector index** you can retrieve from
 
 ---
 
-## Workflow 2 — RAG pipeline (answering a user question)
+### Workflow 2 — RAG pipeline (answering a user question)
 
 Goal: answer a question using **retrieved context** from the FAISS index, then generate a response with a hosted LLM.
 
-### Steps
+#### Steps
 
 1. **User question**
 2. **Query embedding (local)**
@@ -116,7 +116,7 @@ Goal: answer a question using **retrieved context** from the FAISS index, then g
 
 ![alt text](image.png)
 
-## How the agent connects retrieval + LLM (LangGraph ReAct)
+### How the agent connects retrieval + LLM (LangGraph ReAct)
 
 - Tool name: `company_llc_it_knowledge_base`
 - Built from: `create_retriever_tool(retriever=...)`
@@ -132,7 +132,7 @@ At runtime, the agent can:
 
 ---
 
-## Inputs you need to run it
+### Inputs you need to run it
 
 - **NVIDIA API key**: required for the hosted LLM call (`NVIDIA_API_KEY`)
 - **Internet access**: required to download HF models and call NVIDIA endpoints
