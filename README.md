@@ -102,11 +102,11 @@ Goal: answer a question using **retrieved context** from the FAISS index, then g
 
 1. **User question**
 2. **Query embedding (local)**
-   - Convert the user question into an embedding vector using the embedding model.
+   - Convert the user question into an embedding vector using the embedding model (nvidia/llama-3.2-nv-embedqa-1b-v2).
 3. **Vector search (FAISS)**
-   - Retrieve top-\(k\) candidate chunks by similarity (notebook uses `k=6`).
+   - Retrieve top-\(k\) candidate chunks by similarity (use `k=6`).
 4. **Reranking (local)**
-   - Score each candidate chunk with a reranker model and keep the best few (notebook uses `top_k=3`).
+   - Score each candidate chunk with a reranker model (nvidia/llama-3.2-nv-rerankqa-1b-v2) and keep the best few (use `top_k=3`).
 5. **Send to NVIDIA endpoint LLM**
    - The agent sends the question + selected context chunks to the remote model (`ChatNVIDIA`).
 6. **Output**
