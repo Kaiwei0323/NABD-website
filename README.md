@@ -88,7 +88,7 @@ Goal: convert your raw files into a **FAISS vector index** you can retrieve from
 3. **Chunking (LangChain splitters)**
    - `RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=120)`
 4. **Embedding (dense vectors)**
-   - Run local HF embedding model to produce normalized vectors (dimension ~2048 for this model family).
+   - Run local HF embedding model (nvidia/llama-3.2-nv-embedqa-1b-v2) to produce normalized vectors (dimension ~2048 for this model family).
 5. **Build FAISS index**
    - `FAISS.from_documents(chunks, embeddings)` creates an in-memory index.
 
