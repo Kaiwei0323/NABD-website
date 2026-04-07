@@ -201,6 +201,7 @@ const Developer = () => {
             })}
           </div>
         </section>
+
         <DeveloperContactCta />
         </div>
       </div>

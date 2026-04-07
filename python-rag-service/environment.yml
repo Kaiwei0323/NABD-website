@@ -1,0 +1,18 @@
+name: nemotron-rag
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - fastapi
+      - uvicorn
+      - langchain==0.2.16
+      - langchain-community==0.2.12
+      - langchain-nvidia-ai-endpoints
+      - langgraph
+      - faiss-cpu
+      - transformers
+      - accelerate
+      - sentencepiece
+      - python-dotenv

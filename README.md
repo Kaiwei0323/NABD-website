@@ -117,6 +117,7 @@ If the site is served at **https://yourdomain.com** and nginx proxies **/api** t
 | Production: backend only   | `docker compose up -d --build server` |
 | After frontend code change  | `npm run build` (and redeploy `dist/` if needed) |
 | After backend code change   | `docker compose up -d --build server` |
+| Local: RAG chat assistant   | `conda activate nemotron-rag`, then `npm run rag:dev` (see §6) |
 
 ---
 
@@ -127,6 +128,7 @@ NABD-website/
 ├── public/           # Static assets, product images/PDFs
 ├── src/              # React app (pages, components, context, utils)
 ├── server/           # Node API (Express), database in server/database/users.json
+├── python-rag-service/  # FastAPI RAG API (optional; see README §6)
 ├── dist/             # Built frontend (after npm run build) – do not commit
 ├── ssl/              # SSL cert/key for HTTPS (do not commit; in .gitignore)
 ├── docker-compose.yml
@@ -145,9 +147,71 @@ NABD-website/
 
 ---
 
-## 6. Technologies
+## 6. Developer RAG service (optional chat assistant)
+
+The **python-rag-service** powers the floating “Ask a question” assistant on Developer pages. It uses local embedding/rerank models and an NVIDIA LLM via **NVIDIA_API_KEY**.
+
+### 6.1 Conda environment
+
+From the **project root**:
+
+```bash
+conda env create -f python-rag-service/environment.yml
+conda activate nemotron-rag
+```
+
+### 6.2 Install PyTorch
+
+Run **one** of the following inside the activated `nemotron-rag` environment.
+
+**CPU**
+
+```bash
+pip install torch
+```
+
+**GPU (CUDA 12.x — PyTorch wheels for CUDA 12.1)**
+
+```bash
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+```
+
+Use a GPU build that matches your installed NVIDIA driver/CUDA runtime; see [PyTorch Get Started](https://pytorch.org/get-started/locally/) if you need a different CUDA version.
+
+### 6.3 Remaining Python dependencies
+
+Still in `nemotron-rag`, from **python-rag-service**:
+
+```bash
+cd python-rag-service
+pip install -r requirements.txt
+```
+
+### 6.4 API key and run
+
+1. Copy **python-rag-service/.env.example** to **python-rag-service/.env** and set **NVIDIA_API_KEY**.
+2. Start the service (port **8765** by default):
+
+```bash
+# From project root
+npm run rag:dev
+```
+
+Or manually:
+
+```bash
+cd python-rag-service
+python -m uvicorn main:app --host 0.0.0.0 --port 8765 --reload
+```
+
+For local Vite dev, **/developer-rag** is proxied to this service. If you use **Express on port 3001** with the built site, **/developer-rag** is proxied there as well (see **server** config). Set **RAG_SERVICE_URL** if the RAG service runs on another host/port.
+
+---
+
+## 7. Technologies
 
 - React 18, React Router, Vite
 - Node.js, Express (backend)
 - Docker, Docker Compose (optional, for local and production)
 - nginx (optional, for production HTTPS)
+- Python FastAPI, PyTorch, LangChain, FAISS (optional RAG service in **python-rag-service/**)

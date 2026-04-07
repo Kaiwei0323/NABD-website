@@ -5,6 +5,7 @@ const express = require('express')
 const cors = require('cors')
 const fs = require('fs')
 const path = require('path')
+const { createProxyMiddleware } = require('http-proxy-middleware')
 const bcrypt = require('bcryptjs')
 const { PDFDocument, rgb, StandardFonts, degrees } = require('pdf-lib')
 
@@ -21,6 +22,7 @@ const corsOptions = {
       'http://99.64.152.69:3000',
       'http://99.64.152.69',
       'http://localhost:3000',
+      'http://localhost:3001',
       'http://localhost'
     ]
     const allowedHost = !origin || allowed.includes(origin) ||
@@ -388,6 +390,41 @@ app.get('/api/download-pdf', async (req, res) => {
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Server is running' })
+})
+
+// Proxy RAG service (python-rag-service on 8765) so same-origin /developer-rag works on this port
+const ragTarget = process.env.RAG_SERVICE_URL || 'http://127.0.0.1:8765'
+app.use(
+  '/developer-rag',
+  createProxyMiddleware({
+    target: ragTarget,
+    changeOrigin: true,
+    pathRewrite: { '^/developer-rag': '' },
+    logLevel: 'warn'
+  })
+)
+
+// Serve Vite production build (run `npm run build` from repo root)
+const distPath = path.join(__dirname, '..', 'dist')
+app.use(express.static(distPath))
+
+// SPA fallback: client-side routes (e.g. /developer) after static misses
+app.use((req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next()
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ success: false, message: 'Not found' })
+  }
+  if (req.path.startsWith('/developer-rag')) return next()
+  const indexHtml = path.join(distPath, 'index.html')
+  if (!fs.existsSync(indexHtml)) {
+    return res
+      .status(503)
+      .type('html')
+      .send(
+        '<p>Frontend build missing. From the repo root run <code>npm run build</code>, then restart the server.</p>'
+      )
+  }
+  return res.sendFile(indexHtml)
 })
 
 app.listen(PORT, HOST, () => {

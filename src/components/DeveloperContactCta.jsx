@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
+import { DeveloperRagChatPanel } from './DeveloperRagChat'
 
 const DEV_EMAIL = 'yang.kaiwei@inventec.com'
+const CHAT_INPUT_ID = 'dev-contact-rag-input'
 
 const IconChat = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -33,6 +35,14 @@ const DeveloperContactCta = () => {
 
   useEffect(() => {
     if (!open) return
+    const t = window.setTimeout(() => {
+      document.getElementById(CHAT_INPUT_ID)?.focus()
+    }, 320)
+    return () => window.clearTimeout(t)
+  }, [open])
+
+  useEffect(() => {
+    if (!open) return
     const onKey = (e) => {
       if (e.key === 'Escape') setOpen(false)
     }
@@ -52,16 +62,28 @@ const DeveloperContactCta = () => {
       <div
         id="dev-contact-fab-panel"
         className={`dev-contact-fab-panel ${open ? 'dev-contact-fab-panel--open' : ''}`}
-        role="region"
-        aria-label="Developer contact"
+        role="dialog"
+        aria-modal="false"
+        aria-label="Ask a question"
         hidden={!open}
       >
         <div className="dev-contact-fab-panel-accent" aria-hidden="true" />
-        <p className="dev-contact-fab-panel-kicker">Developer support</p>
-        <p className="dev-contact-fab-panel-title">Contact us</p>
-        <p className="dev-contact-fab-panel-desc">
-          Questions on reflashing, SOPs, or edge platforms—send us a note.
-        </p>
+        <div className="dev-contact-fab-panel-top">
+          <p className="dev-contact-fab-panel-kicker">Developer support</p>
+          <p className="dev-contact-fab-panel-title">Ask a question</p>
+          <p className="dev-contact-fab-panel-desc">
+            Get instant answers from our documentation assistant, or reach us by email.
+          </p>
+        </div>
+
+        <div className="dev-contact-fab-chat-block">
+          <p className="dev-contact-fab-chat-label">Documentation assistant</p>
+          <DeveloperRagChatPanel inputId={CHAT_INPUT_ID} />
+        </div>
+
+        <div className="dev-contact-fab-divider" aria-hidden="true" />
+
+        <p className="dev-contact-fab-email-label">Contact us by email</p>
         <a href={`mailto:${DEV_EMAIL}`} className="dev-contact-fab-mail">
           <span className="dev-contact-fab-mail-icon">
             <IconMail />
@@ -81,7 +103,7 @@ const DeveloperContactCta = () => {
         </span>
         <span className="dev-contact-fab-btn-textwrap">
           <span className="dev-contact-fab-btn-line1">Question?</span>
-          <span className="dev-contact-fab-btn-line2">Contact us</span>
+          <span className="dev-contact-fab-btn-line2">Ask us</span>
         </span>
       </button>
     </div>
