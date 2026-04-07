@@ -61,6 +61,49 @@ docker compose up -d --build
 Stop: `docker compose down`.  
 To run only the backend in Docker: `docker compose up -d --build server`.
 
+### Docker: build images
+
+Use this when you want to **compile Docker images** only, or to **rebuild** after Dockerfile or dependency changes.
+
+**Build with Docker Compose** (from the **project root**):
+
+```bash
+# Default services: server + web
+docker compose build
+
+# One service
+docker compose build server
+docker compose build web
+
+# RAG (GPU) — profile required
+docker compose --profile rag build rag
+
+# RAG (CPU)
+docker compose --profile rag-cpu build rag-cpu
+
+# Clean rebuild (ignore cache)
+docker compose build --no-cache
+docker compose build --no-cache server
+```
+
+**Build and start containers** (same as Option B, but forces a rebuild):
+
+```bash
+docker compose up -d --build
+docker compose --profile rag up -d --build server web rag
+```
+
+**Plain `docker build`** (without Compose), from the **project root**:
+
+| Image        | Command |
+|-------------|---------|
+| API server  | `docker build -f server/Dockerfile -t inventec-server:latest .` |
+| Vite / web  | `docker build -f Dockerfile -t inventec-web:latest .` |
+| RAG (CPU)   | `docker build -f python-rag-service/Dockerfile -t inventec-rag-cpu:latest python-rag-service` |
+| RAG (GPU)   | `docker build -f python-rag-service/Dockerfile.gpu -t inventec-rag-gpu:latest python-rag-service` |
+
+**Production frontend (`dist/`):** This repo’s **`web`** Docker image runs the **Vite dev server**, not a static export. For production, run **`npm install`** and **`npm run build`** on the host (or in any Node environment), then deploy **`dist/`** with nginx and run the API with Docker (§2).
+
 ---
 
 ## 2. Production – host website and server (Docker)
@@ -116,6 +159,7 @@ If the site is served at **https://yourdomain.com** and nginx proxies **/api** t
 |-----------------------------|--------|
 | Local: frontend + backend   | Two terminals: `cd server && npm run dev` and `npm run dev` (root) |
 | Local: both in Docker       | `docker compose up -d --build` |
+| Docker: build images only   | `docker compose build` (or `docker compose build server`) |
 | Production: backend only   | `docker compose up -d --build server` |
 | After frontend code change  | `npm run build` (and redeploy `dist/` if needed) |
 | After backend code change   | `docker compose up -d --build server` |
