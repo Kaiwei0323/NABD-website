@@ -17,9 +17,9 @@ const Header = () => {
         </Link>
         <nav className="nav">
           <Link to="/" className="nav-link">Home</Link>
-          <Link to="/product" className="nav-link">Product</Link>
+          <Link to="/product" className="nav-link">Products</Link>
           <Link to="/developer" className="nav-link">Developer</Link>
-          <Link to="/resource" className="nav-link">Resource</Link>
+          <Link to="/resource" className="nav-link">Case Studies</Link>
           <Link to="/about" className="nav-link">About Us</Link>
           <Link to="/contact" className="nav-link">Contact Us</Link>
           {user?.role === 'admin' && (

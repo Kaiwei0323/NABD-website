@@ -1,4 +1,4 @@
-/** One-line blurbs for product grid cards (Product page). */
+/** One-line blurbs for product grid cards (Products page). */
 export const productCardDescriptions = {
   '32e': '8" rugged Android tablet for field service, logistics, and industrial mobility.',
   '32p': '8" rugged Android handheld with bright display and flexible connectivity options.',

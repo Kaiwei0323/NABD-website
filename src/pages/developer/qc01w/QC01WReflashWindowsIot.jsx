@@ -1,8 +1,26 @@
 import QC01WReflashTemplate from './QC01WReflashTemplate'
-import SftpPassword from '../../../components/SftpPassword'
 import { Link } from 'react-router-dom'
 
 const QC01WReflashWindowsIot = () => {
+  const copy = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text)
+    } catch {
+      const ta = document.createElement('textarea')
+      ta.value = text
+      ta.setAttribute('readonly', '')
+      ta.style.position = 'fixed'
+      ta.style.left = '-9999px'
+      document.body.appendChild(ta)
+      ta.select()
+      document.execCommand('copy')
+      document.body.removeChild(ta)
+    }
+  }
+
+  const WGET_CMD =
+    'wget -c https://www.inventecna.com/files/qcs6490/Files/QC01W/QCWin/WOA_POC-1.0/WOA_POC-1.0.7z'
+
   return (
     <QC01WReflashTemplate
       title="Windows (IoT)"
@@ -61,22 +79,35 @@ const QC01WReflashWindowsIot = () => {
       <div className="dev-sop-block">
         <h3 className="dev-sop-block-title">Download Windows image package</h3>
         <p className="dev-sop-block-text">
-          Download the Windows IoT image package from the SFTP server to your host computer, then extract it.
+          Download the Windows IoT image package to your host computer, then extract it.
         </p>
         <ol className="dev-sop-steps">
           <li>
-            Connect to SFTP:
-            <ul className="dev-sop-sublist">
-              <li>Host: <code>99.64.152.69</code></li>
-              <li>Port: <code>22</code></li>
-              <li>Username: <code>qcs6490</code></li>
-              <li>Password: <SftpPassword /></li>
-            </ul>
-          </li>
-          <li>
-            Download:
-            <div className="dev-sop-inline-code">
-              <code>/Files/QC01W/QCWin/WOA_POC-1.0/WOA_POC-1.0.7z</code>
+            Download directly via HTTPS:
+            <div className="dev-sop-inline-code dev-sop-inline-code-with-copy">
+              <code>{WGET_CMD}</code>
+              <button
+                type="button"
+                className="dev-sop-copy-btn"
+                onClick={() => copy(WGET_CMD)}
+                aria-label="Copy wget command"
+                title="Copy"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M9 9h10v10H9V9Z"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
             </div>
           </li>
           <li>Extract the .7z file on the host computer.</li>

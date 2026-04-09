@@ -26,7 +26,7 @@ const CaseStudyDetail = () => {
     <div className="case-study-page">
       <div className="case-study-container">
         <nav className="case-breadcrumb" aria-label="Breadcrumb">
-          <Link to="/resource">Resources</Link>
+          <Link to="/resource">Case Studies</Link>
           <span className="case-breadcrumb-sep" aria-hidden="true">
             /
           </span>
@@ -65,7 +65,7 @@ const CaseStudyDetail = () => {
 
         <footer className="case-study-footer-nav">
           <Link to="/resource" className="case-study-back">
-            ← Back to resources
+            ← Back to Case Studies
           </Link>
         </footer>
       </div>

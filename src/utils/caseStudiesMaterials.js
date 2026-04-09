@@ -1,4 +1,4 @@
-export const resourceData = [
+export const caseStudiesMaterials = [
   {
     id: 'smart-factory',
     title: 'Smart Factory',

@@ -4,9 +4,10 @@ import { AuthProvider } from './context/AuthContext'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
-import Product from './pages/Product'
+import Products from './pages/Products'
 import ProductDetail from './pages/ProductDetail'
-import Resource from './pages/Resource'
+import CaseStudies from './pages/CaseStudies'
+import CaseStudiesMaterialDetail from './pages/CaseStudiesMaterialDetail'
 import CaseStudyDetail from './pages/CaseStudyDetail'
 import About from './pages/About'
 import Contact from './pages/Contact'
@@ -50,10 +51,11 @@ function App() {
           <main className="main-content">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/product" element={<Product />} />
+              <Route path="/product" element={<Products />} />
               <Route path="/product/:productId" element={<ProductDetail />} />
               <Route path="/resource/case/:slug" element={<CaseStudyDetail />} />
-              <Route path="/resource" element={<Resource />} />
+              <Route path="/resource/:resourceId" element={<CaseStudiesMaterialDetail />} />
+              <Route path="/resource" element={<CaseStudies />} />
               <Route path="/developer" element={<Developer />} />
               <Route path="/developer/qc01w/reflash/ubuntu-20-04-minimal" element={<QC01WReflashUbuntu2004Minimal />} />
               <Route path="/developer/qc01w/reflash/ubuntu-24-04" element={<QC01WReflashUbuntu2404 />} />

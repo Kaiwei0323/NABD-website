@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
 import { caseStudiesList } from '../data/caseStudiesMeta'
-import './Resource.css'
+import './CaseStudies.css'
 
-const Resource = () => {
+const CaseStudies = () => {
   return (
     <div className="resource-page">
-      <section className="resource-hero" aria-label="Resources">
+      <section className="resource-hero" aria-label="Case Studies">
         <div className="resource-hero-media">
           <img
             src="/image/nabd-resource/banner.jpg"
@@ -17,8 +17,8 @@ const Resource = () => {
         </div>
         <div className="resource-hero-inner">
           <div className="resource-container resource-hero-copy">
-            <p className="resource-kicker">Resources</p>
-            <h1>Case studies</h1>
+            <p className="resource-kicker">Case Studies</p>
+            <h1>Case Studies</h1>
             <p className="resource-lead">
               Explore how Inventec edge platforms power physical AI, smart manufacturing, and partner
               ecosystems—with full write-ups on this site.
@@ -30,7 +30,7 @@ const Resource = () => {
       <div className="resource-container resource-body">
         <section className="resource-section" aria-labelledby="nabd-cases-heading">
           <div className="resource-section-head">
-            <h2 id="nabd-cases-heading">Case studies</h2>
+            <h2 id="nabd-cases-heading">Case Studies</h2>
             <p className="resource-section-desc">
               Full write-ups on this site—edge servers, physical AI, Qualcomm and Jetson-based
               solutions, and smart manufacturing.
@@ -68,4 +68,4 @@ const Resource = () => {
   )
 }
 
-export default Resource
+export default CaseStudies

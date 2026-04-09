@@ -140,7 +140,7 @@ const Home = () => {
       <section className="home-featured" aria-labelledby="home-featured-heading">
         <div className="home-featured-inner">
           <div className="home-featured-head">
-            <p className="home-featured-kicker">Product spotlight</p>
+            <p className="home-featured-kicker">Products</p>
             <h2 id="home-featured-heading">Featured platforms</h2>
             <p className="home-featured-lead">
               QC01, Edge Pro rack systems, and NVIDIA IGX Thor, IGX Orin, and NVIDIA AGX
