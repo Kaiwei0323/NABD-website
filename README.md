@@ -88,25 +88,25 @@ Goal: convert your raw files into a **FAISS vector index** you can retrieve from
 3. **Chunking (LangChain splitters)**
    - `RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=120)`
 4. **Embedding (dense vectors)**
-   - Run local HF embedding model to produce normalized vectors (dimension ~2048 for this model family).
+   - Run local HF embedding model (nvidia/llama-3.2-nv-embedqa-1b-v2) to produce normalized vectors (dimension ~2048 for this model family).
 5. **Build FAISS index**
    - `FAISS.from_documents(chunks, embeddings)` creates an in-memory index.
 
 ---
 
-## Workflow 2 — RAG pipeline (answering a user question)
+### Workflow 2 — RAG pipeline (answering a user question)
 
 Goal: answer a question using **retrieved context** from the FAISS index, then generate a response with a hosted LLM.
 
-### Steps
+#### Steps
 
 1. **User question**
 2. **Query embedding (local)**
-   - Convert the user question into an embedding vector using the embedding model.
+   - Convert the user question into an embedding vector using the embedding model (nvidia/llama-3.2-nv-embedqa-1b-v2).
 3. **Vector search (FAISS)**
-   - Retrieve top-\(k\) candidate chunks by similarity (notebook uses `k=6`).
+   - Retrieve top-\(k\) candidate chunks by similarity (use `k=6`).
 4. **Reranking (local)**
-   - Score each candidate chunk with a reranker model and keep the best few (notebook uses `top_k=3`).
+   - Score each candidate chunk with a reranker model (nvidia/llama-3.2-nv-rerankqa-1b-v2) and keep the best few (use `top_k=3`).
 5. **Send to NVIDIA endpoint LLM**
    - The agent sends the question + selected context chunks to the remote model (`ChatNVIDIA`).
 6. **Output**
@@ -116,7 +116,7 @@ Goal: answer a question using **retrieved context** from the FAISS index, then g
 
 ![alt text](image.png)
 
-## How the agent connects retrieval + LLM (LangGraph ReAct)
+### How the agent connects retrieval + LLM (LangGraph ReAct)
 
 - Tool name: `company_llc_it_knowledge_base`
 - Built from: `create_retriever_tool(retriever=...)`
@@ -132,7 +132,7 @@ At runtime, the agent can:
 
 ---
 
-## Inputs you need to run it
+### Inputs you need to run it
 
 - **NVIDIA API key**: required for the hosted LLM call (`NVIDIA_API_KEY`)
 - **Internet access**: required to download HF models and call NVIDIA endpoints
