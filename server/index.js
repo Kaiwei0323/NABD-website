@@ -49,6 +49,20 @@ const corsOptions = {
   credentials: true
 }
 app.use(cors(corsOptions))
+
+// Proxy RAG BEFORE express.json() — otherwise JSON body is consumed and upstream never gets the POST body (hangs → nginx 504).
+const ragTarget = process.env.RAG_SERVICE_URL || 'http://127.0.0.1:8765'
+app.use(
+  '/developer-rag',
+  createProxyMiddleware({
+    target: ragTarget,
+    changeOrigin: true,
+    pathRewrite: { '^/developer-rag': '' },
+    logLevel: 'warn',
+    proxyTimeout: 300000
+  })
+)
+
 app.use(express.json())
 
 // Ensure database directory exists
@@ -435,18 +449,6 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Server is running' })
 })
 
-// Proxy RAG service (python-rag-service on 8765) so same-origin /developer-rag works on this port
-const ragTarget = process.env.RAG_SERVICE_URL || 'http://127.0.0.1:8765'
-app.use(
-  '/developer-rag',
-  createProxyMiddleware({
-    target: ragTarget,
-    changeOrigin: true,
-    pathRewrite: { '^/developer-rag': '' },
-    logLevel: 'warn'
-  })
-)
-
 // Serve Vite production build (run `npm run build` from repo root)
 const distPath = path.join(__dirname, '..', 'dist')
 app.use(express.static(distPath))
@@ -476,6 +478,7 @@ async function start() {
     console.log(`Server is running on http://${HOST}:${PORT}`)
     console.log(`Accessible from: http://99.64.152.69:${PORT}`)
     console.log(`Database location: ${DB_PATH}`)
+    console.log(`RAG proxy target (developer-rag): ${ragTarget}`)
   })
 }
 

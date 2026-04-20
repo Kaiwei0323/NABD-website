@@ -6,7 +6,7 @@ services:
       dockerfile: server/Dockerfile
     restart: unless-stopped
     ports:
-      - "3001:3001"
+      - "127.0.0.1:3001:3001"
     volumes:
       # Use host's server/database so existing users.json is used (same as when running server locally)
       - ./server/database:/app/server/database
@@ -15,8 +15,9 @@ services:
     environment:
       - HOST=0.0.0.0
       - PORT=3001
-      # RAG on host (e.g. npm run rag:dev): host.docker.internal. Same compose network: http://rag:8765
-      - RAG_SERVICE_URL=${RAG_SERVICE_URL:-http://host.docker.internal:8765}
+      # RAG: use compose DNS when rag-cpu (or rag) is running — NOT 127.0.0.1 (that is wrong inside the container).
+      # Override if RAG runs only on the host: RAG_SERVICE_URL=http://host.docker.internal:8765
+      - RAG_SERVICE_URL=${RAG_SERVICE_URL:-http://rag-cpu:8765}
 
   # Frontend (Vite dev server) - http://99.64.152.69:3000
   web:
@@ -25,7 +26,7 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
