@@ -63,32 +63,12 @@ const UconReflash = () => {
                 <p className="dev-sop-block-text">{config.packageDescription}</p>
 
                 <ol className="dev-sop-steps">
-                  {config.wgetCmd ? (
-                    <li>
-                      Download:
-                      <div className="dev-sop-inline-code">
-                        <code>{config.wgetCmd}</code>
-                      </div>
-                    </li>
-                  ) : (
-                    <>
-                      <li>
-                        Connect to SFTP:
-                        <ul className="dev-sop-sublist">
-                          <li>Host: <code>99.64.152.69</code></li>
-                          <li>Port: <code>22</code></li>
-                          <li>Username: <code>orin</code></li>
-                          <li>Password: (contact Inventec)</li>
-                        </ul>
-                      </li>
-                      <li>
-                        Download:
-                        <div className="dev-sop-inline-code">
-                          <code>{config.sftpPath}</code>
-                        </div>
-                      </li>
-                    </>
-                  )}
+                  <li>
+                    Download:
+                    <div className="dev-sop-inline-code">
+                      <code>{config.wgetCmd}</code>
+                    </div>
+                  </li>
                 </ol>
               </div>
 

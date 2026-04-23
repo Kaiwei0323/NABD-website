@@ -6,6 +6,22 @@ import DeveloperContactCta from '../../../components/DeveloperContactCta'
 const NcoxNconReflash = () => {
   const { jetpack, method } = useParams()
 
+  const copy = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text)
+    } catch {
+      const ta = document.createElement('textarea')
+      ta.value = text
+      ta.setAttribute('readonly', '')
+      ta.style.position = 'fixed'
+      ta.style.left = '-9999px'
+      document.body.appendChild(ta)
+      ta.select()
+      document.execCommand('copy')
+      document.body.removeChild(ta)
+    }
+  }
+
   const page = useMemo(() => {
     const jpMap = {
       'jp-5-1-2': 'JetPack 5.1.2',
@@ -26,43 +42,49 @@ const NcoxNconReflash = () => {
     const configs = {
       'jp-5-1-2-ota': {
         packageTitle: 'Download OTA package',
-        packageDescription: 'Download the OTA package from the SFTP server. Then follow the manual below to refresh the image over Ethernet.',
-        sftpPath: '/Files/ncox_ncon/JP5.1.2/O1_dev_5.1.2_V07_OTA',
+        packageDescription: 'Download the OTA package via HTTPS. Then follow the manual below to refresh the image over Ethernet.',
+        wgetCmd:
+          'wget -c https://www.inventecna.com/files/orin/Files/ncox_ncon/JP5.1.2/O1_dev_5.1.2_V07_OTA.zip',
         manualPdf: 'AIM-Edge ncox_ncon Image Refresh over Ethernet Manual V1.1.pdf',
         manualDir: 'jp5.1.2/ota'
       },
       'jp-5-1-2-usb': {
         packageTitle: 'Download USB package',
-        packageDescription: 'Download the USB package from the SFTP server. Then follow the manual below to refresh the image.',
-        sftpPath: '/Files/ncox_ncon/JP5.1.2/O1_dev_5.1.2_V07_USB',
+        packageDescription: 'Download the USB package via HTTPS. Then follow the manual below to refresh the image.',
+        wgetCmd:
+          'wget -c https://www.inventecna.com/files/orin/Files/ncox_ncon/JP5.1.2/O1_dev_5.1.2_V07_USB.zip',
         manualPdf: 'AIM-Edge ncox_ncon Developer Image Refresh Manual V1.5.pdf',
         manualDir: 'jp5.1.2/usb'
       },
       'jp-6-0-ota': {
         packageTitle: 'Download OTA package',
-        packageDescription: 'Download the OTA package from the SFTP server. Then follow the manual below to refresh the image over Ethernet.',
-        sftpPath: '/Files/ncox_ncon/JP6.0/O1_dev_6.0_V03_OTA',
+        packageDescription: 'Download the OTA package via HTTPS. Then follow the manual below to refresh the image over Ethernet.',
+        wgetCmd:
+          'wget -c https://www.inventecna.com/files/orin/Files/ncox_ncon/JP6.0/O1_dev_6.0_V03_OTA.zip',
         manualPdf: 'AIM-Edge ncox_ncon Image Refresh over Ethernet Manual V2.0.pdf',
         manualDir: 'jp6.0/ota'
       },
       'jp-6-0-usb': {
         packageTitle: 'Download USB package',
-        packageDescription: 'Download the USB package from the SFTP server. Then follow the manual below to refresh the image.',
-        sftpPath: '/Files/ncox_ncon/JP6.0/O1_dev_6.0_V03_USB',
+        packageDescription: 'Download the USB package via HTTPS. Then follow the manual below to refresh the image.',
+        wgetCmd:
+          'wget -c https://www.inventecna.com/files/orin/Files/ncox_ncon/JP6.0/O1_dev_6.0_V03_USB.zip',
         manualPdf: 'AIM-Edge ncox_ncon Developer Image Refresh Manual V2.0.pdf',
         manualDir: 'jp6.0/usb'
       },
       'jp-6-1-ota': {
         packageTitle: 'Download OTA package',
-        packageDescription: 'Download the OTA package from the SFTP server. Then follow the manual below to refresh the image over Ethernet.',
-        sftpPath: '/Files/ncox_ncon/JP6.1/O1_dev_6.1_V01_OTA',
+        packageDescription: 'Download the OTA package via HTTPS. Then follow the manual below to refresh the image over Ethernet.',
+        wgetCmd:
+          'wget -c https://www.inventecna.com/files/orin/Files/ncox_ncon/JP6.1/O1_dev_6.1_V01_OTA.zip',
         manualPdf: 'AIM-Edge ncox_ncon Image Refresh over Ethernet Manual V2.1.pdf',
         manualDir: 'jp6.1/ota'
       },
       'jp-6-1-usb': {
         packageTitle: 'Download USB package',
-        packageDescription: 'Download the USB package from the SFTP server. Then follow the manual below to refresh the image.',
-        sftpPath: '/Files/ncox_ncon/JP6.1/O1_dev_6.1_V01_USB',
+        packageDescription: 'Download the USB package via HTTPS. Then follow the manual below to refresh the image.',
+        wgetCmd:
+          'wget -c https://www.inventecna.com/files/orin/Files/ncox_ncon/JP6.1/O1_dev_6.1_V01_USB.zip',
         manualPdf: 'AIM-Edge ncox_ncon Developer Image Refresh Manual V2.1.pdf',
         manualDir: 'jp6.1/usb'
       },
@@ -110,32 +132,34 @@ const NcoxNconReflash = () => {
                 </p>
 
                 <ol className="dev-sop-steps">
-                  {config.wgetCmd ? (
-                    <li>
-                      Download:
-                      <div className="dev-sop-inline-code">
-                        <code>{config.wgetCmd}</code>
-                      </div>
-                    </li>
-                  ) : (
-                    <>
-                      <li>
-                        Connect to SFTP:
-                        <ul className="dev-sop-sublist">
-                          <li>Host: <code>99.64.152.69</code></li>
-                          <li>Port: <code>22</code></li>
-                          <li>Username: <code>orin</code></li>
-                          <li>Password: (contact Inventec)</li>
-                        </ul>
-                      </li>
-                      <li>
-                        Download:
-                        <div className="dev-sop-inline-code">
-                          <code>{config.sftpPath}</code>
-                        </div>
-                      </li>
-                    </>
-                  )}
+                  <li>
+                    Download:
+                    <div className="dev-sop-inline-code dev-sop-inline-code-with-copy">
+                      <code>{config.wgetCmd}</code>
+                      <button
+                        type="button"
+                        className="dev-sop-copy-btn"
+                        onClick={() => copy(config.wgetCmd)}
+                        aria-label="Copy wget command"
+                        title="Copy"
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                          <path
+                            d="M9 9h10v10H9V9Z"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </li>
                 </ol>
               </div>
 

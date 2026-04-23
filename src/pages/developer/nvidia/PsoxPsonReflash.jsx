@@ -1,7 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { useMemo } from 'react'
 import '../../Developer.css'
-import SftpPassword from '../../../components/SftpPassword'
 import DeveloperContactCta from '../../../components/DeveloperContactCta'
 
 const PsoxPsonReflash = () => {
@@ -26,29 +25,33 @@ const PsoxPsonReflash = () => {
     const configs = {
       'jp-5-1-2-ota': {
         packageTitle: 'Download OTA package',
-        packageDescription: 'Download the OTA package from the SFTP server. Then follow the manual below to refresh the image over Ethernet.',
-        sftpPath: '/Files/psox_pson/JP5.1.2/O2_dev_5.1.2_V06_OTA',
+        packageDescription: 'Download the OTA package via HTTPS. Then follow the manual below to refresh the image over Ethernet.',
+        wgetCmd:
+          'wget -c https://www.inventecna.com/files/orin/Files/psox_pson/JP5.1.2/O2_dev_5.1.2_V06_OTA.zip',
         manualPdf: 'AIM-Edge psox_pson Image Refresh over Ethernet Manual V1.1.pdf',
         manualDir: 'jp5.1.2/ota'
       },
       'jp-5-1-2-usb': {
         packageTitle: 'Download USB package',
-        packageDescription: 'Download the USB package from the SFTP server. Then follow the manual below to refresh the image.',
-        sftpPath: '/Files/psox_pson/JP5.1.2/O2_dev_5.1.2_V06_USB',
+        packageDescription: 'Download the USB package via HTTPS. Then follow the manual below to refresh the image.',
+        wgetCmd:
+          'wget -c https://www.inventecna.com/files/orin/Files/psox_pson/JP5.1.2/O2_dev_5.1.2_V06_USB.zip',
         manualPdf: 'AIM-Edge psox_pson Developer Image Refresh Manual V1.5.pdf',
         manualDir: 'jp5.1.2/usb'
       },
       'jp-6-1-ota': {
         packageTitle: 'Download OTA package',
-        packageDescription: 'Download the OTA package from the SFTP server. Then follow the manual below to refresh the image over Ethernet.',
-        sftpPath: '/Files/psox_pson/JP6.1/O2_dev_6.1_V02_OTA',
+        packageDescription: 'Download the OTA package via HTTPS. Then follow the manual below to refresh the image over Ethernet.',
+        wgetCmd:
+          'wget -c https://www.inventecna.com/files/orin/Files/psox_pson/JP6.1/O2_dev_6.1_V02_OTA.zip',
         manualPdf: 'AIM-Edge psox_pson Image Refresh over Ethernet Manual V2.0.pdf',
         manualDir: 'jp6.1/ota'
       },
       'jp-6-1-usb': {
         packageTitle: 'Download USB package',
-        packageDescription: 'Download the USB package from the SFTP server. Then follow the manual below to refresh the image.',
-        sftpPath: '/Files/psox_pson/JP6.1/O2_dev_6.1_V02_USB',
+        packageDescription: 'Download the USB package via HTTPS. Then follow the manual below to refresh the image.',
+        wgetCmd:
+          'wget -c https://www.inventecna.com/files/orin/Files/psox_pson/JP6.1/O2_dev_6.1_V02_USB.zip',
         manualPdf: 'AIM-Edge psox_pson Developer Image Refresh Manual V2.0.pdf',
         manualDir: 'jp6.1/usb'
       },
@@ -96,32 +99,12 @@ const PsoxPsonReflash = () => {
                 </p>
 
                 <ol className="dev-sop-steps">
-                  {config.wgetCmd ? (
-                    <li>
-                      Download:
-                      <div className="dev-sop-inline-code">
-                        <code>{config.wgetCmd}</code>
-                      </div>
-                    </li>
-                  ) : (
-                    <>
-                      <li>
-                        Connect to SFTP:
-                        <ul className="dev-sop-sublist">
-                          <li>Host: <code>99.64.152.69</code></li>
-                          <li>Port: <code>22</code></li>
-                          <li>Username: <code>orin</code></li>
-                          <li>Password: <SftpPassword /></li>
-                        </ul>
-                      </li>
-                      <li>
-                        Download:
-                        <div className="dev-sop-inline-code">
-                          <code>{config.sftpPath}</code>
-                        </div>
-                      </li>
-                    </>
-                  )}
+                  <li>
+                    Download:
+                    <div className="dev-sop-inline-code">
+                      <code>{config.wgetCmd}</code>
+                    </div>
+                  </li>
                 </ol>
               </div>
 
