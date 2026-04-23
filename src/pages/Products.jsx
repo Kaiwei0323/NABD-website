@@ -27,10 +27,12 @@ const Products = () => {
   }
 
   // Filter products based on selected category
+  const activeProducts = products.filter((p) => p.active !== false)
+
   const filteredProducts =
     selectedCategory === 'all'
-      ? products
-      : products.filter((product) => categories[selectedCategory].products.includes(product.id))
+      ? activeProducts
+      : activeProducts.filter((product) => categories[selectedCategory].products.includes(product.id))
 
   const handleDownload = async (filePath, fileName) => {
     if (!filePath || !user) return

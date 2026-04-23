@@ -66,6 +66,31 @@ const Developer = () => {
     []
   )
 
+  const sortedNvidiaDevices = useMemo(() => {
+    const parseJetPackVersion = (label) => {
+      // "JetPack 6.2" -> [6,2,0]; "JetPack 5.1.2" -> [5,1,2]
+      const m = String(label).match(/JetPack\s+(\d+)(?:\.(\d+))?(?:\.(\d+))?/i)
+      const major = m?.[1] ? Number(m[1]) : 0
+      const minor = m?.[2] ? Number(m[2]) : 0
+      const patch = m?.[3] ? Number(m[3]) : 0
+      return [major, minor, patch]
+    }
+
+    const cmpDesc = (a, b) => {
+      const av = parseJetPackVersion(a)
+      const bv = parseJetPackVersion(b)
+      for (let i = 0; i < 3; i++) {
+        if (av[i] !== bv[i]) return bv[i] - av[i]
+      }
+      return String(a).localeCompare(String(b))
+    }
+
+    return nvidiaDevices.map((d) => ({
+      ...d,
+      versions: [...(d.versions || [])].sort(cmpDesc),
+    }))
+  }, [nvidiaDevices])
+
   const [qc01wOpen, setQc01wOpen] = useState(false)
   const [nvidiaOpenId, setNvidiaOpenId] = useState(null)
 
@@ -138,7 +163,7 @@ const Developer = () => {
           <h2>NVIDIA Platforms</h2>
 
           <div className="dev-nvidia-list">
-            {nvidiaDevices.map((device) => {
+            {sortedNvidiaDevices.map((device) => {
               const isOpen = nvidiaOpenId === device.id
               return (
                 <div key={device.id} className="developer-card dev-nvidia-card">

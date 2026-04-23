@@ -1,7 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { useMemo } from 'react'
 import '../../Developer.css'
-import SftpPassword from '../../../components/SftpPassword'
 import DeveloperContactCta from '../../../components/DeveloperContactCta'
 
 const NcoxNconReflash = () => {
@@ -69,15 +68,17 @@ const NcoxNconReflash = () => {
       },
       'jp-6-2-ota': {
         packageTitle: 'Download OTA package',
-        packageDescription: 'Download the OTA package from the SFTP server. Then follow the manual below to refresh the image over Ethernet.',
-        sftpPath: '/Files/ncox_ncon/JP6.2/O1_dev_6.2_V01_OTA',
+        packageDescription: 'Download the OTA package via HTTPS. Then follow the manual below to refresh the image over Ethernet.',
+        wgetCmd:
+          'wget -c https://www.inventecna.com/files/orin/Files/ncox_ncon/JP6.2/O1_dev_6.2_V01_OTA.zip',
         manualPdf: 'AIM-Edge ncox_ncon Image Refresh over Ethernet Manual V2.2.pdf',
         manualDir: 'jp6.2/ota'
       },
       'jp-6-2-usb': {
         packageTitle: 'Download USB package',
-        packageDescription: 'Download the USB package from the SFTP server. Then follow the manual below to refresh the image.',
-        sftpPath: '/Files/ncox_ncon/JP6.2/O1_dev_6.2_V01_USB',
+        packageDescription: 'Download the USB package via HTTPS. Then follow the manual below to refresh the image.',
+        wgetCmd:
+          'wget -c https://www.inventecna.com/files/orin/Files/ncox_ncon/JP6.2/O1_dev_6.2_V01_USB.zip',
         manualPdf: 'AIM-Edge ncox_ncon Developer Image Refresh Manual V2.2.pdf',
         manualDir: 'jp6.2/usb'
       }
@@ -109,21 +110,32 @@ const NcoxNconReflash = () => {
                 </p>
 
                 <ol className="dev-sop-steps">
-                  <li>
-                    Connect to SFTP:
-                    <ul className="dev-sop-sublist">
-                      <li>Host: <code>99.64.152.69</code></li>
-                      <li>Port: <code>22</code></li>
-                      <li>Username: <code>orin</code></li>
-                      <li>Password: <SftpPassword /></li>
-                    </ul>
-                  </li>
-                  <li>
-                    Download:
-                    <div className="dev-sop-inline-code">
-                      <code>{config.sftpPath}</code>
-                    </div>
-                  </li>
+                  {config.wgetCmd ? (
+                    <li>
+                      Download:
+                      <div className="dev-sop-inline-code">
+                        <code>{config.wgetCmd}</code>
+                      </div>
+                    </li>
+                  ) : (
+                    <>
+                      <li>
+                        Connect to SFTP:
+                        <ul className="dev-sop-sublist">
+                          <li>Host: <code>99.64.152.69</code></li>
+                          <li>Port: <code>22</code></li>
+                          <li>Username: <code>orin</code></li>
+                          <li>Password: (contact Inventec)</li>
+                        </ul>
+                      </li>
+                      <li>
+                        Download:
+                        <div className="dev-sop-inline-code">
+                          <code>{config.sftpPath}</code>
+                        </div>
+                      </li>
+                    </>
+                  )}
                 </ol>
               </div>
 

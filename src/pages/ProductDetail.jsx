@@ -8,7 +8,7 @@ const ProductDetail = () => {
   const { productId } = useParams()
   const { user } = useAuth()
 
-  const product = products.find((p) => p.id === productId)
+  const product = products.find((p) => p.id === productId && p.active !== false)
 
   const canDownload = user && (user.role === 'admin' || user.role === 'customer')
   const canViewDetails = canDownload

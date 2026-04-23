@@ -2,13 +2,18 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { getDeveloperChatUrl } from '../utils/api'
 
 function formatErrorDetail(detail) {
-  if (typeof detail === 'string') return detail
+  if (typeof detail === 'string' && detail.trim()) return detail.trim()
   if (Array.isArray(detail)) {
     return detail
       .map((d) => (typeof d === 'object' && d?.msg ? d.msg : JSON.stringify(d)))
       .join(' ')
+      .trim()
   }
-  return 'Something went wrong.'
+  if (detail && typeof detail === 'object') {
+    const msg = detail.msg ?? detail.message
+    if (typeof msg === 'string' && msg.trim()) return msg.trim()
+  }
+  return ''
 }
 
 /** Turn `**markdown bold**` into real bold; leaves other text as plain spans. */
@@ -63,25 +68,43 @@ export function DeveloperRagChatPanel({ inputId = 'dev-rag-input', className = '
 
     try {
       const history = messages.map((m) => ({ role: m.role, content: m.content }))
-      const res = await fetch(getDeveloperChatUrl(), {
+      const url = getDeveloperChatUrl()
+      const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text, history })
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
-        throw new Error(formatErrorDetail(data.detail) || res.statusText)
+        const fromApi = formatErrorDetail(data.detail)
+        const base = [fromApi, res.statusText].filter((s) => typeof s === 'string' && s.trim()).join(' — ')
+        throw new Error(
+          base
+            ? `${base} (HTTP ${res.status})`
+            : `Request failed (HTTP ${res.status}). Check that nginx proxies /developer-rag to the app and the RAG service is running on port 8765.`
+        )
+      }
+      if (typeof data?.reply !== 'string') {
+        throw new Error(
+          `Invalid response from assistant (HTTP ${res.status}). The server did not return a text reply.`
+        )
       }
       setMessages((prev) => [
         ...prev,
         {
           role: 'assistant',
-          content: data.reply || '',
-          sources: data.sources || []
+          content: data.reply
         }
       ])
     } catch (err) {
-      setError(err.message || 'Could not reach the assistant.')
+      const msg = err?.message || ''
+      const network =
+        err?.name === 'TypeError' && /fetch|network|failed|load/i.test(msg)
+      setError(
+        network
+          ? 'Could not reach the server. Check your connection, or that the site and RAG backend are running.'
+          : msg || 'Could not reach the assistant.'
+      )
       setMessages((prev) => {
         const last = prev[prev.length - 1]
         if (last?.role === 'user' && last?.content === text) {
@@ -110,16 +133,6 @@ export function DeveloperRagChatPanel({ inputId = 'dev-rag-input', className = '
             <div className="dev-rag-bubble dev-rag-bubble--fab">
               <span className="dev-rag-role">{m.role === 'user' ? 'You' : 'Assistant'}</span>
               <div className="dev-rag-text">{renderBoldSegments(m.content)}</div>
-              {m.role === 'assistant' && m.sources?.length ? (
-                <div className="dev-rag-sources dev-rag-sources--fab">
-                  <span className="dev-rag-sources-label">Sources</span>
-                  <ul>
-                    {m.sources.map((s, j) => (
-                      <li key={j}>{[s.id, s.category].filter(Boolean).join(' · ') || 'Knowledge base'}</li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
             </div>
           </div>
         ))}

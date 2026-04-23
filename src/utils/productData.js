@@ -1,10 +1,11 @@
 // Product data - list of all products in public/product folder
 // Each product folder contains: image/ and spec/ subfolders
 
-export const products = [
+const rawProducts = [
   {
     id: '32e',
     name: '32E',
+    active: false,
     imagePath: '/product/32e/image/32e.jpg',
     specPath: '/product/32e/spec/32e_spec.pdf',
     specInfo: {
@@ -97,6 +98,7 @@ export const products = [
   {
     id: '32p',
     name: '32P',
+    active: false,
     imagePath: '/product/32p/image/32p.jpg',
     specPath: '/product/32p/spec/32p_spec.pdf',
     specInfo: {
@@ -140,6 +142,7 @@ export const products = [
   {
     id: '53r',
     name: '53R',
+    active: false,
     imagePath: '/product/53r/image/ATC-53R_600X600.png',
     specPath: '/product/53r/spec/53r_spec.pdf',
     specInfo: {
@@ -545,11 +548,11 @@ export const products = [
   },
   {
     id: 'edge-pro-1u',
-    name: 'EDGE-PRO-1U',
+    name: 'EdgePro 1U',
     imagePath: '/product/edge-pro-1u/image/server-1U_1000X1000.png',
     specPath: '/product/edge-pro-1u/spec/edge_pro_1u_spec.pdf',
     specInfo: {
-      model: 'Edge-Pro 1U',
+      model: 'EdgePro 1U',
       form_factor: {
         type: '1U1N1P',
         dimensions_mm: '435 x 42.88 x 430',
@@ -603,12 +606,12 @@ export const products = [
   },
   {
     id: 'edge-pro-2u',
-    name: 'EDGE-PRO-2U',
+    name: 'EdgePro 2U',
     imagePath: '/product/edge-pro-2u/image/server-2U_1000X1000.png',
     specPath: '/product/edge-pro-2u/spec/edge_pro_2u_spec.pdf',
     userGuidePath: '/product/edge-pro-2u/userGuilde/EdgePro Quick start guide.pdf',
     specInfo: {
-      model: 'Edge-Pro 2U',
+      model: 'EdgePro 2U',
       form_factor: {
         type: '2U1N1P',
         dimensions_mm: '435 x 87.6 x 430',
@@ -1066,6 +1069,7 @@ export const products = [
   {
     id: 'nx-h3003',
     name: 'NX-H3003',
+    active: false,
     imagePath: '/product/nx-h3003/image/NX-H3003_600X600.png',
     specPath: '/product/nx-h3003/spec/E200G4.pdf',
     specInfo: {
@@ -1280,6 +1284,13 @@ export const products = [
     }
   }
 ]
+
+export const products = rawProducts.map((p) => ({
+  ...p,
+  // Controls whether the product appears in product lists (Products page, featured cards, etc.).
+  // Default to active so existing items stay visible unless explicitly disabled.
+  active: p.active !== undefined ? p.active : true,
+}))
 
 // Helper function to format product name to uppercase
 export const formatProductName = (productId) => {

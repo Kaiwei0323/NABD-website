@@ -15,9 +15,9 @@ services:
     environment:
       - HOST=0.0.0.0
       - PORT=3001
-      # RAG: use compose DNS when rag-cpu (or rag) is running — NOT 127.0.0.1 (that is wrong inside the container).
-      # Override if RAG runs only on the host: RAG_SERVICE_URL=http://host.docker.internal:8765
-      - RAG_SERVICE_URL=${RAG_SERVICE_URL:-http://rag-cpu:8765}
+      # RAG must match whichever service publishes 8765 (rag OR rag-cpu, never both). Use host port so either profile works.
+      # Alternative: http://rag:8765 or http://rag-cpu:8765 when that container is on the same compose network.
+      - RAG_SERVICE_URL=${RAG_SERVICE_URL:-http://host.docker.internal:8765}
 
   # Frontend (Vite dev server) - http://99.64.152.69:3000
   web:

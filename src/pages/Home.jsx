@@ -22,14 +22,14 @@ const FEATURED_ITEMS = [
   },
   {
     id: 'edge-pro-1u',
-    title: 'Edge Pro 1U',
+    title: 'EdgePro 1U',
     tag: 'Edge server',
     description:
       '1U rack server for edge AI and enterprise workloads where data center density meets local inference.',
   },
   {
     id: 'edge-pro-2u',
-    title: 'Edge Pro 2U',
+    title: 'EdgePro 2U',
     tag: 'Edge server',
     description:
       '2U rack platform with room for GPUs and storage—built for heavier compute at the edge.',
@@ -82,7 +82,7 @@ const Home = () => {
   const featuredCards = useMemo(() => {
     return FEATURED_ITEMS.map((item) => {
       const p = products.find((x) => x.id === item.id)
-      if (!p) return null
+      if (!p || p.active === false) return null
       return {
         key: p.id,
         to: `/product/${p.id}`,

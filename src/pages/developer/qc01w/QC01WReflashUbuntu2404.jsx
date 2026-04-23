@@ -19,7 +19,7 @@ const QC01WReflashUbuntu2404 = () => {
   }
 
   const WGET_CMD =
-    'wget -c https://www.inventecna.com/files/qcs6490/Files/QC01W/QCUbuntu/24.04/ubuntu-24.04_x04_QC01W_0242_POC.zip'
+    'wget -c https://www.inventecna.com/files/qcs6490/Files/QC01W/QCUbuntu/24.04/rb3_ubuntu_images_QC01W.x06.zip'
 
   return (
     <QC01WReflashTemplate

@@ -54,15 +54,17 @@ const PsoxPsonReflash = () => {
       },
       'jp-6-2-ota': {
         packageTitle: 'Download OTA package',
-        packageDescription: 'Download the OTA package from the SFTP server. Then follow the manual below to refresh the image over Ethernet.',
-        sftpPath: '/Files/psox_pson/JP6.2/O2_dev_6.2_V03_OTA',
+        packageDescription: 'Download the OTA package via HTTPS. Then follow the manual below to refresh the image over Ethernet.',
+        wgetCmd:
+          'wget -c https://www.inventecna.com/files/orin/Files/psox_pson/JP6.2/O2_dev_6.2_V03_OTA.zip',
         manualPdf: 'AIM-Edge psox_pson Image Refresh over Ethernet Manual V2.0.pdf',
         manualDir: 'jp6.2/ota'
       },
       'jp-6-2-usb': {
         packageTitle: 'Download USB package',
-        packageDescription: 'Download the USB package from the SFTP server. Then follow the manual below to refresh the image.',
-        sftpPath: '/Files/psox_pson/JP6.2/O2_dev_6.2_V03_USB',
+        packageDescription: 'Download the USB package via HTTPS. Then follow the manual below to refresh the image.',
+        wgetCmd:
+          'wget -c https://www.inventecna.com/files/orin/Files/psox_pson/JP6.2/O2_dev_6.2_V03_USB.zip',
         manualPdf: 'AIM-Edge psox_pson Developer Image Refresh Manual V2.0.pdf',
         manualDir: 'jp6.2/usb'
       }
@@ -94,21 +96,32 @@ const PsoxPsonReflash = () => {
                 </p>
 
                 <ol className="dev-sop-steps">
-                  <li>
-                    Connect to SFTP:
-                    <ul className="dev-sop-sublist">
-                      <li>Host: <code>99.64.152.69</code></li>
-                      <li>Port: <code>22</code></li>
-                      <li>Username: <code>orin</code></li>
-                      <li>Password: <SftpPassword /></li>
-                    </ul>
-                  </li>
-                  <li>
-                    Download:
-                    <div className="dev-sop-inline-code">
-                      <code>{config.sftpPath}</code>
-                    </div>
-                  </li>
+                  {config.wgetCmd ? (
+                    <li>
+                      Download:
+                      <div className="dev-sop-inline-code">
+                        <code>{config.wgetCmd}</code>
+                      </div>
+                    </li>
+                  ) : (
+                    <>
+                      <li>
+                        Connect to SFTP:
+                        <ul className="dev-sop-sublist">
+                          <li>Host: <code>99.64.152.69</code></li>
+                          <li>Port: <code>22</code></li>
+                          <li>Username: <code>orin</code></li>
+                          <li>Password: <SftpPassword /></li>
+                        </ul>
+                      </li>
+                      <li>
+                        Download:
+                        <div className="dev-sop-inline-code">
+                          <code>{config.sftpPath}</code>
+                        </div>
+                      </li>
+                    </>
+                  )}
                 </ol>
               </div>
 

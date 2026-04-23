@@ -35,6 +35,17 @@ GPU (requires [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/clou
 docker compose --profile rag up -d --build rag
 ```
 
+### Nginx (HTTPS + reverse proxy)
+
+If you installed nginx from **nginx.org packages** (e.g. `nginx/1.30.0`), the default config loads files from `/etc/nginx/conf.d/*.conf`.
+
+Copy the site config and reload nginx:
+
+```bash
+sudo cp /home/inventec/Documents/NABD-website/nginx-inventecna.conf /etc/nginx/conf.d/inventecna.conf
+sudo nginx -t && sudo systemctl reload nginx
+```
+
 ---
 
 ## Project structure
