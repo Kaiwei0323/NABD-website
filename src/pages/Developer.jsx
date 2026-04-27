@@ -114,7 +114,7 @@ const Developer = () => {
             <p className="developer-hero-kicker">Documentation</p>
             <h1>Developer</h1>
             <p className="developer-hero-lead">
-              Reflash guides and SOPs for Qualcomm QC01W and NVIDIA edge platforms.
+              Reflash guides and SOPs for Qualcomm and NVIDIA edge platforms.
             </p>
           </div>
         </div>
