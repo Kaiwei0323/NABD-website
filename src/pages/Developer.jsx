@@ -102,7 +102,7 @@ const Developer = () => {
       <section className="developer-hero" aria-label="Developer">
         <div className="developer-hero-media">
           <img
-            src="/image/nabd-developer/banner.png"
+            src="/image/nabd-developer/developer-banner.jpeg"
             alt=""
             className="developer-hero-img"
             decoding="async"
