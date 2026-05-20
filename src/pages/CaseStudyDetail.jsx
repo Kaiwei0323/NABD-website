@@ -23,7 +23,7 @@ const CaseStudyDetail = () => {
   }
 
   return (
-    <div className="case-study-page">
+    <div className={`case-study-page${meta.heroCompact ? ' case-study-page--hero-compact' : ''}`}>
       <div className="case-study-container">
         <nav className="case-breadcrumb" aria-label="Breadcrumb">
           <Link to="/resource">Case Studies</Link>

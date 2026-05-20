@@ -3,6 +3,24 @@
  */
 export const caseStudiesList = [
   {
+    slug: 'fsor-smart-surgery',
+    title: 'The Future of Smart Surgery: FSOR AI-Powered Surgical Tower',
+    tag: 'Healthcare',
+    heroImage: '/image/nabd-case-detail/fors/hero.png',
+    heroCompact: true,
+    gridImage: '/image/nabd-case/case-fsor-smart-surgery.png',
+    gridImageWidth: 205,
+    gridImageHeight: 378,
+    gridImageFit: 'contain',
+    highlights: [
+      '0 ms target latency with 3D digital twins and real-time edge inference on Inventec IGX Thor.',
+      'On-prem compute avoids cloud delays for time-critical surgical decisions.',
+      'Unified platform for 4K+ sensor streams in the operating room.',
+      'PACS integration, remote collaboration, and industrial-grade reliability.',
+      'Up to 5,581 TFLOPS, 200 GbE, and 1+1 redundant hot-swappable power.',
+    ],
+  },
+  {
     slug: 'physical-ai-sensor',
     title: 'From Sensor to Decision: Physical AI Use Cases on the Inventec Edge IGX 2U Atlas Server',
     tag: 'Industrial Edge',

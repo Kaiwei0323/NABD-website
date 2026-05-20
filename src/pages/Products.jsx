@@ -133,7 +133,7 @@ const Products = () => {
                   alt={product.name}
                   className="product-image"
                   onError={(e) => {
-                    e.target.src = '/placeholder-image.png'
+                    e.target.src = '/placeholder-image.svg'
                     e.target.alt = 'Image not available'
                   }}
                 />

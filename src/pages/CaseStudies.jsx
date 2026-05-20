@@ -41,7 +41,11 @@ const CaseStudies = () => {
             {caseStudiesList.map((item) => (
               <li key={item.slug} className="nabd-case-card">
                 <Link to={`/resource/case/${item.slug}`} className="nabd-case-link">
-                  <div className="nabd-case-thumb">
+                  <div
+                    className={`nabd-case-thumb${
+                      item.gridImageFit === 'contain' ? ' nabd-case-thumb--contain' : ''
+                    }`}
+                  >
                     <img
                       src={item.gridImage}
                       alt=""
